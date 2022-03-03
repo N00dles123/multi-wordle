@@ -3,8 +3,12 @@ body{
     background-color: "white";
     text-align: center;
     color: black;
-    font-size: 25px;
+    font-size: 25;
     font: 100% system-ui;
+}
+header{
+    padding: 25px;
+    font-size: 37px;
 }
 div{
     
