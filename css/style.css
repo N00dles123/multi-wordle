@@ -1,0 +1,17 @@
+body{
+    padding: 25px;
+    background-color: "white";
+    text-align: center;
+    color: black;
+    font-size: 25px;
+    font: 100% system-ui;
+}
+div{
+    
+}
+@media (prefers-color-scheme: dark){
+    body{
+        background: #121212;
+        color: #eee;
+    }
+}
