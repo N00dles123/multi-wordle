@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang = "en">
-    <head>
-        <link rel="stylesheet" href="css/style.css">
-            <meta charset="UTF-8">
-            <title>Muldle - Multiplayer Wordle</title>
-            <body class="nightmode">
-                <header>
-                    <div class = "title">Muldle-A multiplayer wordle</div>
-                </header>
-                <div id="game-space">
-                    <div id="gameboard">
-                        <game-row id="lettersrow1" letters length="5">
-                            #shadow-root (open)
-                        </game-row>
-                    </div>
-                </div>
-            </body>
+    <meta charset="UTF-8">
+    <head id="gameHead">
+      <link rel="stylesheet" href="css/style.css">
+      <title>Muldle - Multiplayer Wordle</title>
     </head>
+    <body class="nightmode">
+        <header> Muldle-A multiplayer wordle </header>
+        <script src="Scripts/index.js"></script>
+        <div id="gamespace">
+            <div id="gameboard">
+                <game-row id="lettersrow1" class="row" letters length="5"></game-row>
+            </div>
+        </div>
+    </body>
 </html>

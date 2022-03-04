@@ -1,31 +1,44 @@
 body{
-    padding: 25px;
-    background-color: "white";
+    background-color: "black";
     text-align: center;
-    color: black;
-    font-size: 25;
-    font: 100% system-ui;
+    font-size: 25
+    width: 100%;
+    margin: 0;
 }
+
 header{
-    padding: 25px;
-    font-size: 37px;
+  position:fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  font-size: 30px;
+  align-items:center;
+  border-bottom-style: solid;
+  border-bottom-color: red;
+  border-bottom-width: 1px;
+  box-shadow: 10;
+
 }
+
+.
+/*
 #gameboard{
-    width: 350px;
-    height: 420px;
+    width: 100%;
+    height: 100%;
 }
-#lettersrow1{
-    :host{
-        display: block;
-    }
-    :host([invalid]){
-        animation-name: Shake;
-        animation-duration: 1000ms;
-    }    
-}
+*/
+
+/*
 @media (prefers-color-scheme: dark){
     body{
         background: #121212;
         color: #eee;
+        border-style: solid;
+        border-color: blue;
+        padding: 10px;
     }
+}
+*/
+
+.row {
 }
