@@ -10,8 +10,18 @@ header{
     padding: 25px;
     font-size: 37px;
 }
-div{
-    
+#gameboard{
+    width: 350px;
+    height: 420px;
+}
+#lettersrow1{
+    :host{
+        display: block;
+    }
+    :host([invalid]){
+        animation-name: Shake;
+        animation-duration: 1000ms;
+    }    
 }
 @media (prefers-color-scheme: dark){
     body{
