@@ -2,15 +2,62 @@
 <html lang = "en">
     <meta charset="UTF-8">
     <head id="gameHead">
-      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet" />
+      <script src="Scripts/index.js" /></script>
       <title>Muldle - Multiplayer Wordle</title>
     </head>
-    <body class="nightmode">
-        <header> Muldle-A multiplayer wordle </header>
-        <script src="Scripts/index.js"></script>
+    <body>
+        <nav class="top-bar b-b-blue">
+            <div class="nav-left"> Nav </div>
+            <div class="title"> Muldle </div>
+            <div class="nav-right"> Account </div>
+        </nav>
         <div id="gamespace">
-            <div id="gameboard">
-                <game-row id="lettersrow1" class="row" letters length="5"></game-row>
+            <div id="board-container">
+              <div id="board">
+                <div class="row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+              </div>
             </div>
         </div>
     </body>
