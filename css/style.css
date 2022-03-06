@@ -42,30 +42,63 @@ body{
 #gamespace {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 0;
 }
 
-#board-container {
-  display: flex;
+#game-container {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  flex-wrap: nowrap;
+  width: 100%;
+  min-width: 75%;
+  height: 100%;
+}
+
+.board-container {
+  display: grid;
+  flex-direction: row;
   padding-top: 50px;
   justify-content: center;
   align-items: center;
 }
 
-#board {
+.board-title {
+    font-weight: bold;
+}
+
+.board {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
-  grid-gap: 5px;
+  grid-gap: .5em;
+  padding-top: 1em;
+  top:50%;
+  left: 50%;
+  overflow: hidden;
 }
 
 .row {
   display: grid;
-  grid-template-columns: repeat(5, 50px);
-  grid-gap: 5px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: .5em;
+  padding-left: .5em;
 }
 
 .guess-box {
   border: 2px solid red;
   width: 40px;
   height: 40px;
+}
+
+.l-border {
+  border-left: solid black 3px;
+}
+
+.board-l {
+  background-color: green;
+}
+
+.board-r {
+  background-color: cyan;
 }
