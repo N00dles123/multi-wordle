@@ -67,7 +67,11 @@ body{
 .board-title {
     font-weight: bold;
 }
-
+#keyboard{
+  display: grid;
+  background-color: black;
+  vertical-align: bottom;
+}
 .board {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
