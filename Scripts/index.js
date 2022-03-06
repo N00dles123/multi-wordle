@@ -10,5 +10,6 @@ class GuessBox extends HTMLElement {
   }
 }
 
+
 window.customElements.define("game-row", GameRow);
 window.customElements.define("guess-box", GuessBox);
