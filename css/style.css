@@ -47,7 +47,7 @@ body{
 
 #game-container {
   display: grid;
-  grid-template-columns: repeat(2, 50%);
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   align-items: baseline;
   overflow: hidden;
 }
