@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <meta charset="UTF-8">
+    <head id="gameHead">
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet" />
+      <script src="Scripts/index.js" /></script>
+      <title>Muldle - Multiplayer Wordle</title>
+    </head>
+    <body>
+        <nav class="top-bar b-b-blue">
+            <div class="nav-left" onclick="onNavClick()"> Nav </div>
+            <div class="title"> Muldle </div>
+            <button onclick="onAccountClick()">Account</button>
+        </nav>
+        <div id="gamespace">
+          <div class="container">
+            <div class="card-background no-show"> </div>
+            <div class="card">
+              <button class=close-btn>X</button>
+              <h1> Muldle </h1>
+              <input type="email" placeholder="Email"> </input>
+              <input type="password" placeholder="Password"></input>
+              <button> Submit </button>
+            </div>
+          </div>
+          <div id = "game-container">
+            <div id="player1-container" class="board-container board-l">
+              <div class="board-title"> Player 1 Board </div>
+              <div id="player1-board" class="board">
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+              </div>
+              <div id = "keyboard">
+                <div class="row">
+                  <button data-key="q" class = "key">q</button>
+                  <button data-key="w" class = "key">w</button>
+                  <button data-key="e" class = "key">e</button>
+                  <button data-key="r" class = "key">r</button>
+                  <button data-key="t" class = "key">t</button>
+                  <button data-key="y" class = "key">y</button>
+                  <button data-key="u" class = "key">u</button>
+                  <button data-key="i" class = "key">i</button>
+                  <button data-key="o" class = "key">o</button>
+                  <button data-key="p" class = "key">p</button>
+                </div>
+                <div class = "row">
+                  <button data-key="q" class = "key">a</button>
+                  <button data-key="w" class = "key">s</button>
+                  <button data-key="e" class = "key">d</button>
+                  <button data-key="r" class = "key">f</button>
+                  <button data-key="t" class = "key">g</button>
+                  <button data-key="y" class = "key">h</button>
+                  <button data-key="u" class = "key">j</button>
+                  <button data-key="i" class = "key">k</button>
+                  <button data-key="o" class = "key">l</button>
+                </div>
+                <div class = "row">
+                  <button data-key="q" class = "key">z</button>
+                  <button data-key="w" class = "key">x</button>
+                  <button data-key="e" class = "key">c</button>
+                  <button data-key="r" class = "key">v</button>
+                  <button data-key="t" class = "key">b</button>
+                  <button data-key="y" class = "key">n</button>
+                  <button data-key="u" class = "key">m</button>
+                </div>
+              </div>
+            </div>
+            <div id="player2-container" class="board-container board-r l-border">
+              <div class="board-title"> Player 2 Board </div>
+              <div id="player2-board" class="board">
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+                <div class="game-row">
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                  <div class="guess-box"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>
