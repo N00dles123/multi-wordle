@@ -1,0 +1,172 @@
+html{
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+body{
+    background-color: #232624;
+    min-height: 100%;
+    text-align: center;
+    font-size: 25;
+    margin: 0;
+    padding: 0;
+
+}
+.title{
+  color: white;
+}
+.top-bar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 0 16px;
+  height: 30px;
+}
+.account{
+  cursor: pointer;
+}
+.nav-left {
+  display: flex;
+  color: white;
+  align-items:center;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  justify-content: flex-start;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 30px;
+  text-align: center;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.b-b-blue{
+  border-bottom: 2px solid #737270;
+}
+
+#gamespace {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+#game-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  align-items: baseline;
+  overflow: hidden;
+  height: 100%;
+}
+
+.board-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.board-title {
+    font-weight: bold;
+    color: white;
+}
+.key {
+  text-transform: uppercase;
+  background-color: grey;
+  border: 2px solid #1A1A1A;
+  margin: 0;
+  cursor: pointer;
+}
+#keyboard{
+  position: relative;
+  display: inline-block;
+  min-width: 300px;
+  grid-template-rows: repeat(3, 30px);
+  background-color: black;
+  bottom: 0px;
+}
+
+.board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: .5em;
+  padding: 1em;
+  height: 420px;
+  width: 350px;
+}
+
+.game-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: .5em;
+  padding-left: .5em;
+}
+
+.guess-box {
+  display: inline-flex;
+  border: 2px solid #737270;
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+}
+
+.l-border {
+  border-left: solid 2px #737270;
+}
+
+.container {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hack */
+.card-background {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 50%;
+}
+
+.card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 50%;
+  top: 50px;
+  background: white;
+  opacity: 100% !important;
+}
+
+.close-btn{
+  background: none;
+  border: none;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;s
+}
+
+.show {
+  visibility: visible;
+}
+
+.no-show {
+  visibility: hidden;
+}
