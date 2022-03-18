@@ -3,15 +3,15 @@ html{
   height: 100%;
   width: 100%;
 }
+
 body{
-    position: relative;  
-    background-color: grey;
+    background-color: #232624;
     min-height: 100%;
     text-align: center;
     font-size: 25;
     margin: 0;
     padding: 0;
-    
+
 }
 .title{
   color: white;
@@ -50,7 +50,7 @@ body{
 }
 
 .b-b-blue{
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid #737270;
 }
 
 #gamespace {
@@ -64,8 +64,7 @@ body{
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   align-items: baseline;
   overflow: hidden;
-  height: 90%;
-  
+  height: 100%;
 }
 
 .board-container {
@@ -73,7 +72,6 @@ body{
   flex-direction: column;
   padding-top: 50px;
   width: 100%;
-  height: 100%;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -81,6 +79,7 @@ body{
 
 .board-title {
     font-weight: bold;
+    color: white;
 }
 .key {
   text-transform: uppercase;
@@ -90,12 +89,9 @@ body{
   cursor: pointer;
 }
 #keyboard{
-  margin: 10%;
   position: relative;
-  max-width: 100%;
   display: inline-block;
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 300px;
   grid-template-rows: repeat(3, 30px);
   background-color: black;
   bottom: 0px;
@@ -119,20 +115,58 @@ body{
 
 .guess-box {
   display: inline-flex;
-  border: 2px solid red;
+  border: 2px solid #737270;
   border-radius: 3px;
   width: 100%;
   height: 100%;
 }
 
 .l-border {
-  border-left: solid black 3px;
+  border-left: solid 2px #737270;
 }
 
-.board-l {
-  background-color: green;
+.container {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
-.board-r {
-  background-color: cyan;
+/* Hack */
+.card-background {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 50%;
+}
+
+.card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 50%;
+  top: 50px;
+  background: white;
+  opacity: 100% !important;
+}
+
+.close-btn{
+  background: none;
+  border: none;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+}
+
+.show {
+  visibility: visible;
+}
+
+.no-show {
+  visibility: hidden;
 }
