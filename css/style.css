@@ -98,8 +98,13 @@ body{
   min-height: 100%;
   grid-template-rows: repeat(3, 30px);
   background-color: black;
+  border-radius: 2px;
   bottom: 0px;
 }
+/*#keyboard > button{
+  border-radius:5px;
+
+}*/
 
 .board {
   display: grid;
