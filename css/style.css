@@ -160,7 +160,7 @@ body{
   top: 2px;
   right: 2px;
   width: 10px;
-  height: 10px;s
+  height: 10px;
 }
 
 .show {
@@ -170,3 +170,5 @@ body{
 .no-show {
   visibility: hidden;
 }
+
+
