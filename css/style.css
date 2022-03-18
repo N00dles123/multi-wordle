@@ -1,44 +1,134 @@
-body{
-    background-color: "black";
-    text-align: center;
-    font-size: 25
-    width: 100%;
-    margin: 0;
-}
-
-header{
-  position:fixed;
-  top:0;
-  left: 0;
+html{
+  margin: 0px;
+  height: 100%;
   width: 100%;
-  font-size: 30px;
+}
+
+body{
+    background-color: grey;
+    min-height: 100%;
+    text-align: center;
+    font-size: 25;
+    margin: 0;
+    padding: 0;
+
+}
+.title{
+  color: white;
+}
+.top-bar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 0 16px;
+  height: 30px;
+}
+.account{
+  cursor: pointer;
+}
+.nav-left {
+  display: flex;
+  color: white;
   align-items:center;
-  border-bottom-style: solid;
-  border-bottom-color: red;
-  border-bottom-width: 1px;
-  box-shadow: 10;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  justify-content: flex-start;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 30px;
+  text-align: center;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.b-b-blue{
+  border-bottom: 2px solid blue;
+}
+
+#gamespace {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+#game-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  align-items: baseline;
+  overflow: hidden;
+  height: 100%;
 
 }
 
-.
-/*
-#gameboard{
-    width: 100%;
-    height: 100%;
+.board-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
-*/
 
-/*
-@media (prefers-color-scheme: dark){
-    body{
-        background: #121212;
-        color: #eee;
-        border-style: solid;
-        border-color: blue;
-        padding: 10px;
-    }
+.board-title {
+    font-weight: bold;
 }
-*/
+.key {
+  text-transform: uppercase;
+  background-color: grey;
+  border: 2px solid #1A1A1A;
+  margin: 0;
+  cursor: pointer;
+}
+#keyboard{
+  position: relative;
+  display: inline-block;
+  min-width: 300px;
+  grid-template-rows: repeat(3, 30px);
+  background-color: black;
+  bottom: 0px;
+}
 
-.row {
+.board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: .5em;
+  padding: 1em;
+  height: 420px;
+  width: 350px;
+}
+
+.game-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: .5em;
+  padding-left: .5em;
+}
+
+.guess-box {
+  display: inline-flex;
+  border: 2px solid red;
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+}
+
+.l-border {
+  border-left: solid black 3px;
+}
+
+.board-l {
+  background-color: green;
+}
+
+.board-r {
+  background-color: cyan;
 }
