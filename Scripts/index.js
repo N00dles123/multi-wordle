@@ -26,12 +26,17 @@ function getRandomWord(set){
     let array = Array.from(set);
     return array[Math.floor(Math.random() * array.length)];
 }
+
+// adds letters to grid based on keyboard events
+// still need to add functionality to button keyboard on screen
 document.addEventListener('keydown', (event) => {
     var name = event.key;
-    var code = event.code;
-    console.log('Key pressed ' + name + ' ' + code);
-    
+
+    console.log('Key pressed ' + name);
+    // checks whether these the key pressed fits any of these 3 cases
     if(name == 'Enter' || name == 'Backspace' || isLetter(name)){
+        // in enter case, check if theres a 5 letter word inputted by user
+        // if not ignore and give message
         if(name == 'Enter'){
             if(userGuess.length != 5){
                 alert("Not Enough Letters");
@@ -50,6 +55,7 @@ document.addEventListener('keydown', (event) => {
                 return;
             }
         } else if(name == 'Backspace'){
+            // cannot backspace if the user hasnt input any letters yet
             if(userGuess.length > 0){
                 var div = document.getElementById('row' + numAttempts + 'box' + userGuess.length);
                 userGuess = userGuess.slice(0, userGuess.length - 1);
@@ -58,8 +64,10 @@ document.addEventListener('keydown', (event) => {
                 return;
             }
         } else if(userGuess.length >= 5){
+            // cannot type if user guess is at 5 characters
             return;
         } else if(isLetter(name)){
+            // appends letter to word and updates div boxes
             userGuess += name;
             var div = document.getElementById('row' + numAttempts + 'box' + userGuess.length);
             div.textContent = name;
@@ -72,6 +80,7 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// function checks whether inputted key is a letter
 function isLetter(char){
     return char.length == 1 && char.match(/[a-z]/i);
 }
