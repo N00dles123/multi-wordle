@@ -14,8 +14,53 @@ const words = ["cigar","rebut","sissy","humph","awake","blush","focal","evade","
 //global variables
 var loggedIn = false;
 var gameStart = false;
-var gameWord = "";
+var gameWord = "fucks";
+var userGuess= "";
 var wordlen = words.length;
+var numAttempts = 1;
+/*function onkeyboardclick(){
 
+}*/
+//keyboard still needs work incomplete
+document.addEventListener('keydown', (event) => {
+    var name = event.key;
+    var code = event.code;
+    console.log('Key pressed ' + name + ' ' + code);
+    if(name == 'Enter'){
+        if(userGuess.length != 5){
+            alert("Not Enough Letters");
+            return;
+        } else {
+            if(userGuess == gameWord){
+                alert("You have won the game");
+            } else {
+                userGuess = "";
+                numAttempts++;
+            }
+            return;
+        }
+    } else if(name == 'Backspace'){
+        if(userGuess.length > 0){
+            var div = document.getElementById('row' + numAttempts + 'box' + userGuess.length);
+            userGuess = userGuess.slice(0, userGuess.length - 1);
+            div.innerHTML = "";
+            console.log(userGuess + "\n");
+            return;
+        }
+    } else if(userGuess.length >= 5){
+        return;
+    } else if(isLetter(name)){
+        userGuess += name;
+        var div = document.getElementById('row' + numAttempts + 'box' + userGuess.length);
+        div.textContent = name;
+        
+        console.log(userGuess + "\n");
+        return;
+    }
+});
+
+function isLetter(char){
+    return char.match(/[a-z]/i);
+}
 //console.log(wordlen);
 //console.log(gameWord);

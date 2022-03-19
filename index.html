@@ -27,42 +27,42 @@
             <div id="player1-container" class="board-container board-l">
               <div class="board-title"> Player 1 Board </div>
               <div id="player1-board" class="board">
-                <div class="game-row">
+                <div class="game-row" id="gamerow1">
+                  <div class="guess-box" id="row1box1"></div>
+                  <div class="guess-box" id="row1box2"></div>
+                  <div class="guess-box" id="row1box3"></div>
+                  <div class="guess-box" id="row1box4"></div>
+                  <div class="guess-box" id="row1box5"></div>
+                </div>
+                <div class="game-row" id="gamerow2">
+                  <div class="guess-box" id="row2box1"></div>
+                  <div class="guess-box" id="row2box2"></div>
+                  <div class="guess-box" id="row2box3"></div>
+                  <div class="guess-box" id="row2box4"></div>
+                  <div class="guess-box" id="row2box5"></div>
+                </div>
+                <div class="game-row" id="gamerow3">
+                  <div class="guess-box" id="row3box1"></div>
+                  <div class="guess-box" id="row3box2"></div>
+                  <div class="guess-box" id="row3box3"></div>
+                  <div class="guess-box" id="row3box4"></div>
+                  <div class="guess-box" id="row3box5"></div>
+                </div>
+                <div class="game-row" id="gamerow4">
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                 </div>
-                <div class="game-row">
+                <div class="game-row" id="gamerow5">
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                 </div>
-                <div class="game-row">
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                </div>
-                <div class="game-row">
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                </div>
-                <div class="game-row">
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                  <div class="guess-box"></div>
-                </div>
-                <div class="game-row">
+                <div class="game-row" id="gamerow6">
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
                   <div class="guess-box"></div>
@@ -70,7 +70,7 @@
                   <div class="guess-box"></div>
                 </div>
               </div>
-              <div id = "keyboard">
+              <div id = "keyboard" onkeypress="onkeyboardclick()">
                 <div class="row">
                   <button data-key="q" class = "key">q</button>
                   <button data-key="w" class = "key">w</button>
