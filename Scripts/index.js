@@ -22,10 +22,12 @@ var numAttempts = 1;
 
 }*/
 //keyboard still needs work incomplete
+
 document.addEventListener('keydown', (event) => {
     var name = event.key;
     var code = event.code;
     console.log('Key pressed ' + name + ' ' + code);
+    
     if(name == 'Enter' || name == 'Backspace' || isLetter(name)){
         if(name == 'Enter'){
             if(userGuess.length != 5){
@@ -40,6 +42,8 @@ document.addEventListener('keydown', (event) => {
                     userGuess = "";
                     numAttempts++;
                 }
+                if(numAttempts > 6)
+                    alert("The word was " + gameWord.toUpperCase());
                 return;
             }
         } else if(name == 'Backspace'){
