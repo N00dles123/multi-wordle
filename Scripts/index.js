@@ -14,15 +14,18 @@ const words = new Set(["cigar","rebut","sissy","humph","awake","blush","focal","
 //global variables
 var loggedIn = false;
 var gameStart = false;
-var gameWord = "fucks";
+var gameWord = getRandomWord(words);
 var userGuess= "";
 var wordlen = words.length;
 var numAttempts = 1;
-/*function onkeyboardclick(){
 
-}*/
+// for testing prints random word
+console.log(gameWord);
 //keyboard still needs work incomplete
-
+function getRandomWord(set){
+    let array = Array.from(set);
+    return array[Math.floor(Math.random() * array.length)];
+}
 document.addEventListener('keydown', (event) => {
     var name = event.key;
     var code = event.code;
