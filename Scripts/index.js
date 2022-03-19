@@ -34,7 +34,7 @@ document.addEventListener('keydown', (event) => {
 
     console.log('Key pressed ' + name);
     // checks whether these the key pressed fits any of these 3 cases
-    if(name == 'Enter' || name == 'Backspace' || isLetter(name)){
+    if((name == 'Enter' || name == 'Backspace' || isLetter(name)) && loggedIn){
         // in enter case, check if theres a 5 letter word inputted by user
         // if not ignore and give message
         if(name == 'Enter'){

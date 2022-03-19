@@ -140,9 +140,10 @@ body{
   border-left: solid 2px #737270;
 }
 
-.container {
+#container {
   position: absolute;
-  display: flex;
+  top: 25%;
+  left: 25%;
   height: 100%;
   width: 100%;
   justify-content: center;
@@ -167,16 +168,23 @@ body{
   background: white;
   opacity: 100% !important;
 }
-
-.close-btn{
+#submit{
+  cursor: pointer;
+}
+#close-btn{
+  cursor: pointer;
   background: none;
-  border: none;
   position: absolute;
-  top: 2px;
-  right: 2px;
+  border-style: none;
+  top: 2%;
+  right: 1%;
   width: 10px;
   height: 10px;
 }
+.hidden{
+  display: none;
+}
+
 
 .show {
   visibility: visible;
