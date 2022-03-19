@@ -83,12 +83,13 @@ body{
 }
 .key {
   text-transform: uppercase;
-  background-color: grey;
-  border: 2px solid #1A1A1A;
   margin: 0;
+  padding: 10px;
   cursor: pointer;
 }
-#keyboard{
+#keyboard > button{
+  text-transform: uppercase;
+  padding: 10px;
   position: relative;
   display: inline-block;
   min-width: 300px;

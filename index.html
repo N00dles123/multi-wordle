@@ -13,16 +13,16 @@
             <button onclick="onAccountClick()">Account</button>
         </nav>
         <div id="gamespace">
-          <div class="container">
+        <!---  <div class="container">
             <div class="card-background no-show"> </div>
             <div class="card">
               <button class=close-btn>X</button>
               <h1> Muldle </h1>
               <input type="email" placeholder="Email"> </input>
               <input type="password" placeholder="Password"></input>
-              <button> Submit </button>
+              <button onclick="onSubmitClick()"> Submit </button>
             </div>
-          </div>
+          </div> -->
           <div id = "game-container">
             <div id="player1-container" class="board-container board-l">
               <div class="board-title"> Player 1 Board </div>
@@ -95,6 +95,7 @@
                   <button data-key="o" class = "key">l</button>
                 </div>
                 <div class = "row">
+                  <button data-key="↵" class = key>enter</button>
                   <button data-key="q" class = "key">z</button>
                   <button data-key="w" class = "key">x</button>
                   <button data-key="e" class = "key">c</button>
@@ -102,6 +103,7 @@
                   <button data-key="t" class = "key">b</button>
                   <button data-key="y" class = "key">n</button>
                   <button data-key="u" class = "key">m</button>
+                  <button data-key="←" class = "key">back</button>
                 </div>
               </div>
             </div>
