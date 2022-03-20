@@ -12,9 +12,9 @@ const words = new Set(["cigar","rebut","sissy","humph","awake","blush","focal","
 "wench","wends","wenge","wenny","wents","weros","wersh","wests","wetas","wetly","wexed","wexes","whamo","whams","whang","whaps","whare","whata","whats","whaup","whaur","wheal","whear","wheen","wheep","wheft","whelk","whelm","whens","whets","whews","wheys","whids","whift","whigs","whilk","whims","whins","whios","whips","whipt","whirr","whirs","whish","whiss","whist","whits","whity","whizz","whomp","whoof","whoot","whops","whore","whorl","whort","whoso","whows","whump","whups","whyda","wicca","wicks","wicky","widdy","wides","wiels","wifed","wifes","wifey","wifie","wifty","wigan","wigga","wiggy","wikis","wilco","wilds","wiled","wiles","wilga","wilis","wilja","wills","wilts","wimps","winds","wined","wines","winey","winge","wings","wingy","winks","winna","winns","winos","winze","wiped","wiper","wipes","wired","wirer","wires","wirra","wised","wises","wisha","wisht","wisps","wists","witan","wited","wites","withe","withs","withy","wived","wiver","wives","wizen","wizes","woads","woald","wocks","wodge","woful","wojus","woker","wokka","wolds","wolfs","wolly","wolve","wombs","womby","womyn","wonga","wongi","wonks","wonky","wonts","woods","wooed","woofs","woofy","woold","wools","woons","woops","woopy","woose","woosh","wootz","words","works","worms","wormy","worts","wowed","wowee","woxen","wrang","wraps","wrapt","wrast","wrate","wrawl","wrens","wrick","wried","wrier","wries","writs","wroke","wroot","wroth","wryer","wuddy","wudus","wulls","wurst","wuses","wushu","wussy","wuxia","wyled","wyles","wynds","wynns","wyted","wytes","xebec","xenia","xenic","xenon","xeric","xerox","xerus","xoana","xrays","xylan","xylem","xylic","xylol","xylyl","xysti","xysts","yaars","yabas","yabba","yabby","yacca","yacka","yacks","yaffs","yager","yages","yagis","yahoo","yaird","yakka","yakow","yales","yamen","yampy","yamun","yangs","yanks","yapok","yapon","yapps","yappy","yarak","yarco","yards","yarer","yarfa","yarks","yarns","yarrs","yarta","yarto","yates","yauds","yauld","yaups","yawed","yawey","yawls","yawns","yawny","yawps","ybore","yclad","ycled","ycond","ydrad","ydred","yeads","yeahs","yealm","yeans","yeard","years","yecch","yechs","yechy","yedes","yeeds","yeesh","yeggs","yelks","yells","yelms","yelps","yelts","yenta","yente","yerba","yerds","yerks","yeses","yesks","yests","yesty","yetis","yetts","yeuks","yeuky","yeven","yeves","yewen","yexed","yexes","yfere","yiked","yikes","yills","yince","yipes","yippy","yirds","yirks","yirrs","yirth","yites","yitie","ylems","ylike","ylkes","ymolt","ympes","yobbo","yobby","yocks","yodel","yodhs","yodle","yogas","yogee","yoghs","yogic","yogin","yogis","yoick","yojan","yoked","yokel","yoker","yokes","yokul","yolks","yolky","yomim","yomps","yonic","yonis","yonks","yoofs","yoops","yores","yorks","yorps","youks","yourn","yours","yourt","youse","yowed","yowes","yowie","yowls","yowza","yrapt","yrent","yrivd","yrneh","ysame","ytost","yuans","yucas","yucca","yucch","yucko","yucks","yucky","yufts","yugas","yuked","yukes","yukky","yukos","yulan","yules","yummo","yummy","yumps","yupon","yuppy","yurta","yurts","yuzus","zabra","zacks","zaida","zaidy","zaire","zakat","zaman","zambo","zamia","zanja","zante","zanza","zanze","zappy","zarfs","zaris","zatis","zaxes","zayin","zazen","zeals","zebec","zebub","zebus","zedas","zeins","zendo","zerda","zerks","zeros","zests","zetas","zexes","zezes","zhomo","zibet","ziffs","zigan","zilas","zilch","zilla","zills","zimbi","zimbs","zinco","zincs","zincy","zineb","zines","zings","zingy","zinke","zinky","zippo","zippy","ziram","zitis","zizel","zizit","zlote","zloty","zoaea","zobos","zobus","zocco","zoeae","zoeal","zoeas","zoism","zoist","zombi","zonae","zonda","zoned","zoner","zones","zonks","zooea","zooey","zooid","zooks","zooms","zoons","zooty","zoppa","zoppo","zoril","zoris","zorro","zouks","zowee","zowie","zulus","zupan","zupas","zuppa","zurfs","zuzim","zygal","zygon","zymes","zymic"]);
 
 //global variables
-var loggedIn = false;
+var loggedIn = true;
 var gameStart = false;
-var gameWord = getRandomWord(words);
+var gameWord = "zones";
 var userGuess= "";
 var wordlen = words.length;
 var numAttempts = 1;
@@ -31,7 +31,6 @@ function getRandomWord(set){
 // still need to add functionality to button keyboard on screen
 document.addEventListener('keydown', (event) => {
     var name = event.key;
-
     console.log('Key pressed ' + name);
     // checks whether these the key pressed fits any of these 3 cases
     if((name == 'Enter' || name == 'Backspace' || isLetter(name)) && loggedIn){
@@ -43,10 +42,15 @@ document.addEventListener('keydown', (event) => {
                 return;
             } else {
                 if(userGuess == gameWord){
+                    for(let x = 0; x < 5; x++){
+                        let row = document.getElementById('row' + numAttempts + 'box' + (x + 1));
+                        row.style.backgroundColor = "green";
+                    }
                     alert("You have won the game");
                 } else if(!words.has(userGuess)){
                     alert("Not in word list!");
                 } else {
+                    verifyWord(userGuess);
                     userGuess = "";
                     numAttempts++;
                 }
@@ -79,6 +83,34 @@ document.addEventListener('keydown', (event) => {
         }
     }
 });
+
+//function changes the div color based on letter positioning
+// so by using a map we can keep track of how many times each letter appears in real word
+function verifyWord(userAttempt){
+    let hashmap = new Map();
+     for(let i = 0; i < 5; i++){
+        let letter = gameWord.charAt(i);
+        if(hashmap.has(letter)){
+            hashmap.set(letter, hashmap.get(letter) + 1)
+        } else {
+            hashmap.set(letter, 1);
+        }
+    }
+    for(let i = 0; i < 5; i++){
+        let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
+        let guess = userAttempt.charAt(i);
+        if(guess == gameWord.charAt(i)){                   
+            div.style.backgroundColor="green";
+        }else if(hashmap.has(guess)){
+            div.style.backgroundColor = "#c9b458";
+            if(hashmap.get(guess) > 1){
+                hashmap.set(guess, (hashmap.get(guess) - 1));
+            } else {
+                hashmap.delete(guess);
+            }
+        }
+    }
+}
 
 // function checks whether inputted key is a letter
 function isLetter(char){
