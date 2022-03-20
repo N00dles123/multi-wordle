@@ -14,7 +14,7 @@ const words = new Set(["cigar","rebut","sissy","humph","awake","blush","focal","
 //global variables
 var loggedIn = true;
 var gameStart = false;
-var gameWord = "zones";
+var gameWord = getRandomWord(words);
 var userGuess= "";
 var wordlen = words.length;
 var numAttempts = 1;
