@@ -41,6 +41,16 @@ document.addEventListener('keydown', (event) => {
                 alert("Not Enough Letters");
                 return;
             } else {
+                //create hashmap to keep track of characters and frequency
+                let hashmap = new Map();
+                for(let i = 0; i < 5; i++){
+                    let letter = gameWord.charAt(i);
+                    if(hashmap.has(letter)){
+                        hashmap.set(letter, hashmap.get(letter) + 1)
+                    } else {
+                        hashmap.set(letter, 1);
+                    }
+                }
                 if(userGuess == gameWord){
                     for(let x = 0; x < 5; x++){
                         let row = document.getElementById('row' + numAttempts + 'box' + (x + 1));
@@ -50,7 +60,7 @@ document.addEventListener('keydown', (event) => {
                 } else if(!words.has(userGuess)){
                     alert("Not in word list!");
                 } else {
-                    verifyWord(userGuess);
+                    verifyWord(userGuess, hashmap);
                     userGuess = "";
                     numAttempts++;
                 }
@@ -86,21 +96,14 @@ document.addEventListener('keydown', (event) => {
 
 //function changes the div color based on letter positioning
 // so by using a map we can keep track of how many times each letter appears in real word
-function verifyWord(userAttempt){
-    let hashmap = new Map();
-     for(let i = 0; i < 5; i++){
-        let letter = gameWord.charAt(i);
-        if(hashmap.has(letter)){
-            hashmap.set(letter, hashmap.get(letter) + 1)
-        } else {
-            hashmap.set(letter, 1);
-        }
-    }
+function verifyWord(userAttempt, hashmap){
+     
     for(let i = 0; i < 5; i++){
         let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
         let guess = userAttempt.charAt(i);
         if(guess == gameWord.charAt(i)){                   
             div.style.backgroundColor="green";
+            hashmap.delete(guess);
         }else if(hashmap.has(guess)){
             div.style.backgroundColor = "#c9b458";
             if(hashmap.get(guess) > 1){
