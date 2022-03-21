@@ -16,11 +16,15 @@
         <div id="container">
             <div class="card-background no-show"> </div>
             <div class="card">
-              <button id=close-btn class="hidden">X</button>
+              <button id="close-btn" onclick = "closeCard()" class="hidden">X</button>
               <h1> Muldle </h1>
-              <input type="email" placeholder="Email"> </input>
-              <input type="password" placeholder="Password"></input>
-              <button id="submit" onclick="onSubmitClick()"> Submit </button>
+              <input id="email" placeholder="Email"> </input>
+              <input id="password" placeholder="Password"></input>
+              <button id="submit" onclick="login()"> Submit </button>
+              <button id="signup" onclick="signUp()"> Sign up</button>
+              <input id="registerUser" placeholder="Email" class = "hidden"> </input>
+              <input id="registerPass" placeholder="Password" class = "hidden"> </input>
+              <button id="register" onclick="register()" class = "hidden"> Register</button>
             </div>
           </div>
           <div id = "game-container">
