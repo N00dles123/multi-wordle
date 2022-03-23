@@ -31,8 +31,32 @@ function getRandomWord(set){
 // adds letters to grid based on keyboard events
 // still need to add functionality to button keyboard on screen
 document.addEventListener('keydown', (event) => {
-    var name = event.key;
+    var letter = event.key;
     console.log('Key pressed ' + name);
+    verifyKey(letter);
+});
+
+//function changes the div color based on letter positioning
+// so by using a map we can keep track of how many times each letter appears in real word
+function verifyWord(userAttempt, hashmap){
+     
+    for(let i = 0; i < 5; i++){
+        let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
+        let guess = userAttempt.charAt(i);
+        if(guess == gameWord.charAt(i)){                   
+            div.style.backgroundColor="green";
+            hashmap.delete(guess);
+        }else if(hashmap.has(guess)){
+            div.style.backgroundColor = "#c9b458";
+            if(hashmap.get(guess) > 1){
+                hashmap.set(guess, (hashmap.get(guess) - 1));
+            } else {
+                hashmap.delete(guess);
+            }
+        }
+    }
+}
+function verifyKey(name){
     // checks whether these the key pressed fits any of these 3 cases
     if((name == 'Enter' || name == 'Backspace' || isLetter(name)) && loggedIn){
         // in enter case, check if theres a 5 letter word inputted by user
@@ -93,33 +117,10 @@ document.addEventListener('keydown', (event) => {
             return;
         }
     }
-});
-
-//function changes the div color based on letter positioning
-// so by using a map we can keep track of how many times each letter appears in real word
-function verifyWord(userAttempt, hashmap){
-     
-    for(let i = 0; i < 5; i++){
-        let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
-        let guess = userAttempt.charAt(i);
-        if(guess == gameWord.charAt(i)){                   
-            div.style.backgroundColor="green";
-            hashmap.delete(guess);
-        }else if(hashmap.has(guess)){
-            div.style.backgroundColor = "#c9b458";
-            if(hashmap.get(guess) > 1){
-                hashmap.set(guess, (hashmap.get(guess) - 1));
-            } else {
-                hashmap.delete(guess);
-            }
-        }
-    }
 }
  function keyboard(e){
     var name = e.value;
-    if(isLetter(name)){
-        
-    }
+    verifyKey(name);
  }
 // function checks whether inputted key is a letter
 function isLetter(char){
