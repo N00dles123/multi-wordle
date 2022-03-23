@@ -13,7 +13,7 @@
             <button onclick="onAccountClick()">Account</button>
         </nav>
         <div id="gamespace">
-        <div id="container">
+        <div id="container" class="hidden">
             <div class="card-background no-show"> </div>
             <div class="card">
               <button id=close-btn class="hidden">X</button>
@@ -70,40 +70,40 @@
                   <div class="guess-box" id="row6box5"></div>
                 </div>
               </div>
-              <div id = "keyboard" onkeypress="onkeyboardclick()">
+              <div id = "keyboard">
                 <div class="row">
-                  <button data-key="q" class = "key">q</button>
-                  <button data-key="w" class = "key">w</button>
-                  <button data-key="e" class = "key">e</button>
-                  <button data-key="r" class = "key">r</button>
-                  <button data-key="t" class = "key">t</button>
-                  <button data-key="y" class = "key">y</button>
-                  <button data-key="u" class = "key">u</button>
-                  <button data-key="i" class = "key">i</button>
-                  <button data-key="o" class = "key">o</button>
-                  <button data-key="p" class = "key">p</button>
+                  <button value="q" class = "key" onclick="keyboard(this)">q</button>
+                  <button value="w" class = "key" onclick="keyboard(this)">w</button>
+                  <button value="e" class = "key" onclick="keyboard(this)">e</button>
+                  <button value="r" class = "key" onclick="keyboard(this)">r</button>
+                  <button value="t" class = "key" onclick="keyboard(this)">t</button>
+                  <button value="y" class = "key" onclick="keyboard(this)">y</button>
+                  <button value="u" class = "key" onclick="keyboard(this)">u</button>
+                  <button value="i" class = "key" onclick="keyboard(this)">i</button>
+                  <button value="o" class = "key" onclick="keyboard(this)">o</button>
+                  <button value="p" class = "key" onclick="keyboard(this)">p</button>
                 </div>
                 <div class = "row">
-                  <button data-key="q" class = "key">a</button>
-                  <button data-key="w" class = "key">s</button>
-                  <button data-key="e" class = "key">d</button>
-                  <button data-key="r" class = "key">f</button>
-                  <button data-key="t" class = "key">g</button>
-                  <button data-key="y" class = "key">h</button>
-                  <button data-key="u" class = "key">j</button>
-                  <button data-key="i" class = "key">k</button>
-                  <button data-key="o" class = "key">l</button>
+                  <button value="a" class = "key" onclick="keyboard(this)">a</button>
+                  <button value="s" class = "key" onclick="keyboard(this)">s</button>
+                  <button value="d" class = "key" onclick="keyboard(this)">d</button>
+                  <button value="f" class = "key" onclick="keyboard(this)">f</button>
+                  <button value="g" class = "key" onclick="keyboard(this)">g</button>
+                  <button value="h" class = "key" onclick="keyboard(this)">h</button>
+                  <button value="j" class = "key" onclick="keyboard(this)">j</button>
+                  <button value="k" class = "key" onclick="keyboard(this)">k</button>
+                  <button value="l" class = "key" onclick="keyboard(this)">l</button>
                 </div>
                 <div class = "row">
-                  <button data-key="↵" class = key>enter</button>
-                  <button data-key="q" class = "key">z</button>
-                  <button data-key="w" class = "key">x</button>
-                  <button data-key="e" class = "key">c</button>
-                  <button data-key="r" class = "key">v</button>
-                  <button data-key="t" class = "key">b</button>
-                  <button data-key="y" class = "key">n</button>
-                  <button data-key="u" class = "key">m</button>
-                  <button data-key="←" class = "key">back</button>
+                  <button value="Enter" class = "key" onclick="keyboard(this)">enter</button>
+                  <button value="z" class = "key" onclick="keyboard(this)">z</button>
+                  <button value="x" class = "key" onclick="keyboard(this)">x</button>
+                  <button value="c" class = "key" onclick="keyboard(this)">c</button>
+                  <button value="v" class = "key" onclick="keyboard(this)">v</button>
+                  <button value="b" class = "key" onclick="keyboard(this)">b</button>
+                  <button value="n" class = "key" onclick="keyboard(this)">n</button>
+                  <button value="m" class = "key" onclick="keyboard(this)">m</button>
+                  <button value="Backspace" class = "key" onclick="keyboard(this)">back</button>
                 </div>
               </div>
             </div>
