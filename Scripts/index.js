@@ -32,7 +32,7 @@ function getRandomWord(set){
 // still need to add functionality to button keyboard on screen
 document.addEventListener('keydown', (event) => {
     var letter = event.key;
-    console.log('Key pressed ' + name);
+    console.log('Key pressed ' + letter);
     verifyKey(letter);
 });
 
