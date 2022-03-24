@@ -14,7 +14,7 @@ const words = new Set(["cigar","rebut","sissy","humph","awake","blush","focal","
 //global variables
 var loggedIn = true;
 var gameStart = false;
-var gameWord = getRandomWord(words);
+var gameWord = "knelt";
 var userGuess= "";
 var wordlen = words.length;
 var numAttempts = 1;
@@ -39,14 +39,24 @@ document.addEventListener('keydown', (event) => {
 //function changes the div color based on letter positioning
 // so by using a map we can keep track of how many times each letter appears in real word
 function verifyWord(userAttempt, hashmap){
-     
+     // check for greens first, then proceed to check for yellows
     for(let i = 0; i < 5; i++){
         let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
         let guess = userAttempt.charAt(i);
         if(guess == gameWord.charAt(i)){                   
             div.style.backgroundColor="green";
-            hashmap.delete(guess);
-        }else if(hashmap.has(guess)){
+            if(hashmap.get(guess) == 1){
+                hashmap.delete(guess);
+            } else {
+                hashmap.set(guess, (hashmap.get(guess) - 1))
+            }
+        }
+    }
+    //now checking for yellows
+    for(let i = 0; i < 5; i++){
+        let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
+        let guess = userAttempt.charAt(i);
+        if(hashmap.has(guess)){
             div.style.backgroundColor = "#c9b458";
             if(hashmap.get(guess) > 1){
                 hashmap.set(guess, (hashmap.get(guess) - 1));
@@ -126,5 +136,12 @@ function verifyKey(name){
 function isLetter(char){
     return char.length == 1 && char.match(/[a-z]/i);
 }
+var span = document.getElementsByClassName("close")[0];
+
+function closeStatus(){ 
+    var statusScreen = document.getElementById("status");
+    console.log(statusScreen);
+    statusScreen.style.display = "none";
+};
 //console.log(wordlen);
 //console.log(gameWord);
