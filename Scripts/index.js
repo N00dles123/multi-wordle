@@ -65,6 +65,8 @@ function verifyWord(userAttempt, hashmap){
             } else {
                 hashmap.delete(guess);
             }
+        } else if(!hashmap.has(guess) && div.style.backgroundColor != "green"){
+            div.style.backgroundColor="black"
         }
     }
 }
