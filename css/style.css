@@ -83,12 +83,13 @@ body{
 }
 .key {
   text-transform: uppercase;
-  background-color: grey;
-  border: 2px solid #1A1A1A;
   margin: 0;
+  padding: 10px;
   cursor: pointer;
 }
-#keyboard{
+#keyboard > button{
+  text-transform: uppercase;
+  padding: 10px;
   position: relative;
   display: inline-block;
   min-width: 300px;
@@ -114,8 +115,22 @@ body{
 }
 
 .guess-box {
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  color: white;
   display: inline-flex;
-  border: 2px solid #737270;
+  border: 2px solid #61f50c;
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+}
+.guest-box {
+  display: inline-flex;
+  border: 2px solid #f50c0c;
   border-radius: 3px;
   width: 100%;
   height: 100%;
@@ -125,9 +140,10 @@ body{
   border-left: solid 2px #737270;
 }
 
-.container {
+#container {
   position: absolute;
-  display: flex;
+  top: 25%;
+  left: 25%;
   height: 100%;
   width: 100%;
   justify-content: center;
@@ -152,16 +168,23 @@ body{
   background: white;
   opacity: 100% !important;
 }
-
-.close-btn{
+#submit{
+  cursor: pointer;
+}
+#close-btn{
+  cursor: pointer;
   background: none;
-  border: none;
   position: absolute;
-  top: 2px;
-  right: 2px;
+  border-style: none;
+  top: 2%;
+  right: 1%;
   width: 10px;
   height: 10px;
 }
+.hidden{
+  display: none;
+}
+
 
 .show {
   visibility: visible;
@@ -169,4 +192,40 @@ body{
 
 .no-show {
   visibility: hidden;
+}
+
+.status_window{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.status_content{
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close{
+  color: #aaa;
+  background-color: #fefefe;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  border-style:none;
+}
+
+.close:hover, .close:focus{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
