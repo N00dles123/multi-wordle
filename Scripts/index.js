@@ -13,8 +13,8 @@ const words = new Set(["cigar","rebut","sissy","humph","awake","blush","focal","
 
 //global variables
 var loggedIn = true;
-var gameStart = false;
-var gameWord = "knelt";
+var gameStart = true;
+var gameWord = getRandomWord(words);
 var userGuess= "";
 var wordlen = words.length;
 var numAttempts = 1;
@@ -50,6 +50,8 @@ function verifyWord(userAttempt, hashmap){
             } else {
                 hashmap.set(guess, (hashmap.get(guess) - 1))
             }
+        } else if(!hashmap.has(guess)){
+            div.style.backgroundColor="black"
         }
     }
     //now checking for yellows
@@ -68,7 +70,7 @@ function verifyWord(userAttempt, hashmap){
 }
 function verifyKey(name){
     // checks whether these the key pressed fits any of these 3 cases
-    if((name == 'Enter' || name == 'Backspace' || isLetter(name)) && loggedIn){
+    if((name == 'Enter' || name == 'Backspace' || isLetter(name)) && loggedIn && gameStart){
         // in enter case, check if theres a 5 letter word inputted by user
         // if not ignore and give message
         if(name == 'Enter'){
@@ -91,7 +93,10 @@ function verifyKey(name){
                         let row = document.getElementById('row' + numAttempts + 'box' + (x + 1));
                         row.style.backgroundColor = "green";
                     }
-                    //alert("You have won the game");
+                    let statusWindow = document.getElementById("status");
+                    let para = document.getElementById("status_paragraph");
+                    statusWindow.style.display = "block"
+                    para.textContent = "You have won the game";
                 } else if(!words.has(userGuess)){
                     alert("Not in word list!");
                 } else {
@@ -99,8 +104,12 @@ function verifyKey(name){
                     userGuess = "";
                     numAttempts++;
                 }
-                if(numAttempts > 6)
-                    alert("The word was " + gameWord.toUpperCase());
+                if(numAttempts > 6){
+                    let statusWindow = document.getElementById("status");
+                    let para = document.getElementById("status_paragraph");
+                    statusWindow.style.display = "block"
+                    para.textContent = ("The word was " + gameWord.toUpperCase());
+                }
                 return;
             }
         } else if(name == 'Backspace'){
@@ -136,7 +145,6 @@ function verifyKey(name){
 function isLetter(char){
     return char.length == 1 && char.match(/[a-z]/i);
 }
-var span = document.getElementsByClassName("close")[0];
 
 function closeStatus(){ 
     var statusScreen = document.getElementById("status");
