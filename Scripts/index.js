@@ -45,6 +45,7 @@ function verifyWord(userAttempt, hashmap){
         let guess = userAttempt.charAt(i);
         if(guess == gameWord.charAt(i)){                   
             div.style.backgroundColor="green";
+            updateKeyboard(guess, "green");
             if(hashmap.get(guess) == 1){
                 hashmap.delete(guess);
             } else {
@@ -60,6 +61,7 @@ function verifyWord(userAttempt, hashmap){
         let guess = userAttempt.charAt(i);
         if(hashmap.has(guess)){
             div.style.backgroundColor = "#c9b458";
+            updateKeyboard(guess, "#c9b458");
             if(hashmap.get(guess) > 1){
                 hashmap.set(guess, (hashmap.get(guess) - 1));
             } else {
@@ -67,6 +69,7 @@ function verifyWord(userAttempt, hashmap){
             }
         } else if(!hashmap.has(guess) && div.style.backgroundColor != "green"){
             div.style.backgroundColor="red"
+            updateKeyboard(guess, "red");
         }
     }
 }
@@ -162,3 +165,10 @@ function closeStatus(){
 };
 //console.log(wordlen);
 //console.log(gameWord);
+// Update keyboard colors
+function updateKeyboard(name, color) {
+    var key = document.getElementById(name);
+    if(key){
+      key.style.backgroundColor=color;
+    }
+  }
