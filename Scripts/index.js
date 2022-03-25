@@ -100,7 +100,10 @@ function verifyKey(name){
                     statusWindow.style.display = "block"
                     para.textContent = "You have won the game";
                 } else if(!words.has(userGuess)){
-                    alert("Not in word list!");
+                    let statusWindow = document.getElementById("status");
+                    let para = document.getElementById("status_paragraph");
+                    statusWindow.style.display = "block";
+                    para.textContent = "Not in word list!";
                 } else {
                     verifyWord(userGuess, hashmap);
                     userGuess = "";
@@ -109,7 +112,7 @@ function verifyKey(name){
                 if(numAttempts > 6){
                     let statusWindow = document.getElementById("status");
                     let para = document.getElementById("status_paragraph");
-                    statusWindow.style.display = "block"
+                    statusWindow.style.display = "block";
                     para.textContent = ("The word was " + gameWord.toUpperCase());
                 }
                 return;
