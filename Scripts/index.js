@@ -51,7 +51,7 @@ function verifyWord(userAttempt, hashmap){
                 hashmap.set(guess, (hashmap.get(guess) - 1))
             }
         } else if(!hashmap.has(guess)){
-            div.style.backgroundColor="black"
+            div.style.backgroundColor="red"
         }
     }
     //now checking for yellows
@@ -66,7 +66,7 @@ function verifyWord(userAttempt, hashmap){
                 hashmap.delete(guess);
             }
         } else if(!hashmap.has(guess) && div.style.backgroundColor != "green"){
-            div.style.backgroundColor="black"
+            div.style.backgroundColor="red"
         }
     }
 }
