@@ -76,8 +76,11 @@ function verifyKey(name){
         // in enter case, check if theres a 5 letter word inputted by user
         // if not ignore and give message
         if(name == 'Enter'){
-            if(userGuess.length != 5){
-                alert("Not Enough Letters");
+            if(userGuess.length < 5){
+                let statusWindow = document.getElementById("status");
+                let para = document.getElementById("status_paragraph");
+                statusWindow.style.display = "block";
+                para.textContent = "Not enough letters";
                 return;
             } else {
                 //create hashmap to keep track of characters and frequency
