@@ -43,15 +43,16 @@ function verifyWord(userAttempt, hashmap){
     for(let i = 0; i < 5; i++){
         let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
         let guess = userAttempt.charAt(i);
-        if(guess == gameWord.charAt(i)){                   
+        if(guess == gameWord.charAt(i)){
             div.style.backgroundColor="green";
+            updateKeyboard(guess, "green");
             if(hashmap.get(guess) == 1){
                 hashmap.delete(guess);
             } else {
                 hashmap.set(guess, (hashmap.get(guess) - 1))
             }
         } else if(!hashmap.has(guess)){
-            div.style.backgroundColor="red"
+            div.style.backgroundColor="red";
         }
     }
     //now checking for yellows
@@ -60,6 +61,7 @@ function verifyWord(userAttempt, hashmap){
         let guess = userAttempt.charAt(i);
         if(hashmap.has(guess)){
             div.style.backgroundColor = "#c9b458";
+            updateKeyboard(guess, "#c9b458");
             if(hashmap.get(guess) > 1){
                 hashmap.set(guess, (hashmap.get(guess) - 1));
             } else {
@@ -67,6 +69,7 @@ function verifyWord(userAttempt, hashmap){
             }
         } else if(!hashmap.has(guess) && div.style.backgroundColor != "green"){
             div.style.backgroundColor="red"
+            updateKeyboard(guess, "red");
         }
     }
 }
@@ -154,10 +157,18 @@ function isLetter(char){
     return char.length == 1 && char.match(/[a-z]/i);
 }
 
-function closeStatus(){ 
+function closeStatus(){
     var statusScreen = document.getElementById("status");
     console.log(statusScreen);
     statusScreen.style.display = "none";
 };
 //console.log(wordlen);
 //console.log(gameWord);
+
+// Update keyboard colors
+function updateKeyboard(name, color) {
+  var key = document.getElementById(name);
+  if(key){
+    key.style.backgroundColor=color;
+  }
+}
