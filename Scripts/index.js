@@ -100,6 +100,7 @@ function verifyKey(name){
                 if(userGuess == gameWord){
                     for(let x = 0; x < 5; x++){
                         let row = document.getElementById('row' + numAttempts + 'box' + (x + 1));
+                        updateKeyboard(gameWord.charAt(x), "green");
                         row.style.backgroundColor = "green";
                     }
                     let statusWindow = document.getElementById("status");
