@@ -1,174 +1,31 @@
 <!DOCTYPE html>
 <html lang = "en">
     <meta charset="UTF-8">
-    <head id="gameHead">
       <link rel="stylesheet" href="css/style.css" rel="stylesheet" />
       <script src="Scripts/index.js" /></script>
       <script src="Scripts/login.js" ></script>
       <title>Muldle - Multiplayer Wordle</title>
-    </head>
-    <body>
-        <nav class="top-bar b-b-blue">
-            <div class="nav-left" onclick="onNavClick()"> Nav </div>
-            <div class="title"> Muldle </div>
-            <button onclick="onAccountClick()">Account</button>
-        </nav>
-        <div id="gamespace">
-          <div id="container">
-            <div class="card-background no-show"> </div>
+      <h1> Muldle - multiplayer wordle </h1>  
+      <div id="container">
             <div class="card">
-              <button id="close-btn" onclick = "closeCard()" class="hidden">X</button>
-              <h1> Muldle </h1>
-              <input id="email" placeholder="Email"> </input>
-              <input id="password" placeholder="Password"></input>
-              <button id="submit" onclick="login()"> Submit </button>
-              <button id="signup" onclick="signUp()"> Sign up</button>
-              <input id="registerUser" placeholder="Email" class = "hidden"> </input>
-              <input id="registerPass" placeholder="Password" class = "hidden"> </input>
-              <button id="register" onclick="register()" class = "hidden"> Register</button>
+              <h1 id = loginTitle>Login</h1>
+              <form action="includes/login.php" method="post">
+                <input id="username" name="userid" placeholder="Username"> </input>
+                <input id="password" name="pwd" type="password" placeholder="Password"></input>
+                <button id="submit" type="submit" name="submit"> Login </button>
+              </form>
             </div>
-          </div>
-          <div id = "game-container">
-            <div id="player1-container" class="board-container board-l">
-              <div class="board-title"> Your Board </div>
-              <div id="player1-board" class="board">
-                <div class="game-row" id="gamerow1">
-                  <div class="guess-box" id="row1box1"></div>
-                  <div class="guess-box" id="row1box2"></div>
-                  <div class="guess-box" id="row1box3"></div>
-                  <div class="guess-box" id="row1box4"></div>
-                  <div class="guess-box" id="row1box5"></div>
-                </div>
-                <div class="game-row" id="gamerow2">
-                  <div class="guess-box" id="row2box1"></div>
-                  <div class="guess-box" id="row2box2"></div>
-                  <div class="guess-box" id="row2box3"></div>
-                  <div class="guess-box" id="row2box4"></div>
-                  <div class="guess-box" id="row2box5"></div>
-                </div>
-                <div class="game-row" id="gamerow3">
-                  <div class="guess-box" id="row3box1"></div>
-                  <div class="guess-box" id="row3box2"></div>
-                  <div class="guess-box" id="row3box3"></div>
-                  <div class="guess-box" id="row3box4"></div>
-                  <div class="guess-box" id="row3box5"></div>
-                </div>
-                <div class="game-row" id="gamerow4">
-                  <div class="guess-box" id="row4box1"></div>
-                  <div class="guess-box" id="row4box2"></div>
-                  <div class="guess-box" id="row4box3"></div>
-                  <div class="guess-box" id="row4box4"></div>
-                  <div class="guess-box" id="row4box5"></div>
-                </div>
-                <div class="game-row" id="gamerow5">
-                  <div class="guess-box" id="row5box1"></div>
-                  <div class="guess-box" id="row5box2"></div>
-                  <div class="guess-box" id="row5box3"></div>
-                  <div class="guess-box" id="row5box4"></div>
-                  <div class="guess-box" id="row5box5"></div>
-                </div>
-                <div class="game-row" id="gamerow6">
-                  <div class="guess-box" id="row6box1"></div>
-                  <div class="guess-box" id="row6box2"></div>
-                  <div class="guess-box" id="row6box3"></div>
-                  <div class="guess-box" id="row6box4"></div>
-                  <div class="guess-box" id="row6box5"></div>
-                </div>
-              </div>
-              <div id = "keyboard">
-                <div class="row">
-                  <button value="q" id="q" class = "key" onclick="keyboard(this)">q</button>
-                  <button value="w" id="w" class = "key" onclick="keyboard(this)">w</button>
-                  <button value="e" id="e" class = "key" onclick="keyboard(this)">e</button>
-                  <button value="r" id="r" class = "key" onclick="keyboard(this)">r</button>
-                  <button value="t" id="t" class = "key" onclick="keyboard(this)">t</button>
-                  <button value="y" id="y" class = "key" onclick="keyboard(this)">y</button>
-                  <button value="u" id="u" class = "key" onclick="keyboard(this)">u</button>
-                  <button value="i" id="i" class = "key" onclick="keyboard(this)">i</button>
-                  <button value="o" id="o" class = "key" onclick="keyboard(this)">o</button>
-                  <button value="p" id="p" class = "key" onclick="keyboard(this)">p</button>
-                </div>
-                <div class = "row">
-                  <button value="a" id="a" class = "key" onclick="keyboard(this)">a</button>
-                  <button value="s" id="s" class = "key" onclick="keyboard(this)">s</button>
-                  <button value="d" id="d" class = "key" onclick="keyboard(this)">d</button>
-                  <button value="f" id="f" class = "key" onclick="keyboard(this)">f</button>
-                  <button value="g" id="g" class = "key" onclick="keyboard(this)">g</button>
-                  <button value="h" id="h" class = "key" onclick="keyboard(this)">h</button>
-                  <button value="j" id="j" class = "key" onclick="keyboard(this)">j</button>
-                  <button value="k" id="k" class = "key" onclick="keyboard(this)">k</button>
-                  <button value="l" id="l" class = "key" onclick="keyboard(this)">l</button>
-                </div>
-                <div class = "row">
-                  <button value="Enter" class = "key" onclick="keyboard(this)">enter</button>
-                  <button value="z" id="z" class = "key" onclick="keyboard(this)">z</button>
-                  <button value="x" id="x" class = "key" onclick="keyboard(this)">x</button>
-                  <button value="c" id="c" class = "key" onclick="keyboard(this)">c</button>
-                  <button value="v" id="v" class = "key" onclick="keyboard(this)">v</button>
-                  <button value="b" id="b" class = "key" onclick="keyboard(this)">b</button>
-                  <button value="n" id="n" class = "key" onclick="keyboard(this)">n</button>
-                  <button value="m" id="m" class = "key" onclick="keyboard(this)">m</button>
-                  <button value="Backspace" class = "key" onclick="keyboard(this)">back</button>
-                </div>
-              </div>
+            <div class="signup">
+              <h1 id = loginTitle>Don't Have an Account? Sign up</h1>
+              <form action="includes/signup.php" method="post">
+                <input id="registerEmail" name="userEmail" placeholder="Your Email" > </input>
+                <input id="registerUser" name="uid" type="Your Username" placeholder="Username" > </input>
+                <input id="registerPass" name="pwd" type="password" placeholder="Password"> </input>
+                <input id="passRep" name="pwdRep" type="password" placeholder="Password repeat"> </input>
+                <button id="register" type="submit" name="submit"> Register</button>
+              </form>
             </div>
-            <div id="player2-container" class="board-container board-r l-border">
-              <div class="board-title"> Opponent Board </div>
-              <div id="player2-board" class="board">
-                <div class="game-row">
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                </div>
-                <div class="game-row">
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                </div>
-                <div class="game-row">
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                </div>
-                <div class="game-row">
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                </div>
-                <div class="game-row">
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                </div>
-                <div class="game-row">
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                  <div class="guest-box"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-    </body>
-    <div id="status" class="status_window">
-      <div class="status_content">
-        <span class="close" onclick="closeStatus()" >&times;</span>
-        <p id="status_paragraph"></p>
-      </div>
-    </div>
 </html>
 </html>
 

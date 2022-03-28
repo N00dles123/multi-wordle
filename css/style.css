@@ -13,14 +13,20 @@ body{
     padding: 0;
 
 }
-.title{
-  color: white;
+.button{
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
 }
 .top-bar{
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   flex-wrap: nowrap;
   padding: 0 16px;
   height: 30px;
@@ -39,9 +45,12 @@ body{
 }
 
 .title {
+  color: white;
   font-weight: 700;
   font-size: 30px;
   text-align: center;
+  margin: auto;
+  align-items: center;
 }
 
 .nav-right {
@@ -143,15 +152,18 @@ body{
 }
 
 #container {
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  height: 100%;
-  width: 100%;
+  background-color: #232624;
   justify-content: center;
-  align-items: center;
+  position: absolute; 
+  top: 10%;
+  left: 10%;
+  flex-direction: row;
+  padding: 25%;
 }
 
+#loginTitle{
+  color: white;
+}
 /* Hack */
 .card-background {
   height: 100%;
@@ -160,15 +172,28 @@ body{
   opacity: 50%;
 }
 
-.card {
+.card{
   position: absolute;
   display: flex;
   flex-direction: column;
-  width: 50%;
-  height: 50%;
   top: 50px;
-  background: white;
-  opacity: 100% !important;
+  background: #232624;
+}
+
+.card > input{
+  width: 310px;
+  
+}
+.signup > input{
+  width: 310px;
+  
+}
+
+.signup{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+
 }
 #submit{
   cursor: pointer;
@@ -230,4 +255,7 @@ body{
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+h1{
+  color: white;
 }

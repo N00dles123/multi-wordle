@@ -22,11 +22,12 @@ var objPeople = [
  }
 
  function signUp() {
+     document.getElementById("registerEmail").classList.remove("hidden");
      document.getElementById("registerUser").classList.remove("hidden");
      document.getElementById("registerPass").classList.remove("hidden");
      document.getElementById("register").classList.remove("hidden");
      document.getElementById("signup").classList.add("hidden");
-     document.getElementById("email").classList.add("hidden");
+     document.getElementById("username").classList.add("hidden");
      document.getElementById("password").classList.add("hidden");
      document.getElementById("submit").classList.add("hidden");
  }
