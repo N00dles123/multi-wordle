@@ -14,7 +14,7 @@ const words = new Set(["cigar","rebut","sissy","humph","awake","blush","focal","
 //global variables
 var loggedIn = true;
 var gameStart = true;
-var gameWord = "bobas";
+var gameWord = getRandomWord(words);
 var userGuess= "";
 var wordlen = words.length;
 var numAttempts = 1;
@@ -59,7 +59,7 @@ function verifyWord(userAttempt, hashmap){
     for(let i = 0; i < 5; i++){
         let div = document.getElementById('row' + numAttempts + 'box' + (i + 1));
         let guess = userAttempt.charAt(i);
-        if(hashmap.has(guess)){
+        if(hashmap.has(guess) && div.style.backgroundColor != "green"){
             div.style.backgroundColor = "#c9b458";
             updateKeyboard(guess, "#c9b458");
             if(hashmap.get(guess) > 1){
