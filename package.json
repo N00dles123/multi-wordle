@@ -1,0 +1,27 @@
+{
+  "name": "multi-wordle",
+  "version": "1.0.0",
+  "description": "a multiplayer implementation of wordle",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/N00dles123/multi-wordle.git"
+  },
+  "author": "Jason Lin, Kyle Barrows, Raahym Khan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/N00dles123/multi-wordle/issues"
+  },
+  "homepage": "https://github.com/N00dles123/multi-wordle#readme",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "mongoose": "^6.2.9",
+    "path": "^0.12.7"
+  }
+}

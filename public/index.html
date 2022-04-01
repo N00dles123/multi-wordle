@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <meta charset="UTF-8">
+      <link rel="stylesheet" href="../css/style.css" rel="stylesheet" />
+      <title>Muldle - Multiplayer Wordle</title>
+      <h1> Muldle - multiplayer wordle </h1>  
+      <div id="container">
+            <!--<div class="card">
+              <h1 id = loginTitle>Login</h1>
+              <form id="login" method="post">
+                <input id="username" id="userid" placeholder="Username"> </input>
+                <input id="password" id="password" type="password" placeholder="Password"></input>
+                <button id="submit" type="submit" name="submit"> Login </button>
+              </form>
+            </div> -->
+            <div class="signup">
+              <h1 id = loginTitle>Don't Have an Account? Sign up</h1>
+              <form id="reg-form">
+                <input id="userEmail" placeholder="Your Email" > </input>
+                <input id="uid" type="text" placeholder="Username" > </input>
+                <input id="pwd" type="password" placeholder="Password"> </input>
+                <input id="pwdRep" type="password" placeholder="Password repeat"> </input>
+                <input id="register" type="submit" value="Submit Form"></input>
+              </form>
+              <script>
+                const form = document.getElementById('reg-form');
+                form.addEventListener('submit', registerUser);
+                
+                // will send data by JSON
+                async function registerUser(event) {
+                  event.preventDefault();
+                  const email = document.getElementById('userEmail').value;
+                  const uid = document.getElementById('uid').value;
+                  const pwd = document.getElementById('pwd').value;
+                  const dupPwd = document.getElementById('pwdRep').value;
+
+                  const result = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      email, 
+                      uid, 
+                      pwd, 
+                      dupPwd
+                    })
+                  }).then((res) => res.json());
+
+                  console.log(result);
+                }
+              </script>
+            </div>
+      </div>
+</html>
+</html>
+

@@ -1,10 +1,3 @@
-<?php
-  session_start();
-  if(!isset($_SESSION["userid"])){
-    header('Location: index.html');
-    exit();
-  }
-?>
 
 <!DOCTYPE html>
 <html lang = "en">
@@ -20,7 +13,7 @@
         <nav class="top-bar b-b-blue">
               <div class="nav-left" onclick="onNavClick()"> Nav </div>
               <h1 class="title"> Muldle </h1>
-              <button onclick="onAccountClick()"><?php echo $_SESSION["useruid"]; ?>'s Account</button>
+              <button onclick="onAccountClick()"> Account</button>
               <a href="includes/logout.php" class="button" > Logout </a>
         </nav>
         <div id="gamespace"> 
