@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.post('/api/register', async (req, res) => {
     console.log(req.body);
 
-    const {email, uid, pwd} = req.body;
+    const {email, uid, pwd, numWins} = req.body;
     
     // hash passwords to prevent stealing of data :)
     const password = await bcrypt.hash(pwd, 10);
@@ -31,10 +31,12 @@ app.post('/api/register', async (req, res) => {
         const res = await User.create({
             email,
             uid,
-            password
+            password,
+            numWins
         });
         console.log("User created Successfully" , res);
     } catch(error){
+        console.log(error);
         if(error.code === 11000){
             return res.json({ status: 'error', error: "Username already in use buffoon"});
         }

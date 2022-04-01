@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = "en">
     <meta charset="UTF-8">
-      <link rel="stylesheet" href="../css/style.css" rel="stylesheet" />
+      <link rel="stylesheet" href="/css/style.css" rel="stylesheet" />
       <title>Muldle - Multiplayer Wordle</title>
       <h1> Muldle - multiplayer wordle </h1>  
       <div id="container">
@@ -34,11 +34,16 @@
                   const uid = document.getElementById('uid').value;
                   const pwd = document.getElementById('pwd').value;
                   const dupPwd = document.getElementById('pwdRep').value;
+                  const numWins = 0;
                   if(pwd != dupPwd){
                     paragraph = document.getElementById("passmatch");
                     paragraph.textContext = "Passwords do not match";
                     paragraph.style.color = "red";
                     alert("Passwords do not match");
+                    return;
+                  }
+                  if(email == "" || uid == "" || pwd == "" || dupPwd == ""){
+                    alert("There are empty fields");
                     return;
                   }
                   const result = await fetch('/api/register', {
@@ -49,11 +54,12 @@
                     body: JSON.stringify({
                       email, 
                       uid, 
-                      pwd, 
+                      pwd,
+                      numWins 
                     })
                   }).then((res) => res.json());
-
-                  console.log(result);
+                  //console.log(result);
+                  //console.log(location.href);
                 }
               </script>
             </div>
