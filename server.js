@@ -1,5 +1,5 @@
 // starts webpage
-
+// for video https://www.youtube.com/watch?v=b91XgdyX-SM&t=570s&ab_channel=codedamn  at 31:08 checking error codes
 const express = require("express");
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -35,8 +35,10 @@ app.post('/api/register', async (req, res) => {
         });
         console.log("User created Successfully" , res);
     } catch(error){
-        console.log(error);
-        return res.json({ status: 'error'});
+        if(error.code === 11000){
+            return res.json({ status: 'error', error: "Username already in use buffoon"});
+        }
+        
     }
 
     res.json({ status: 'ok' });
