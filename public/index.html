@@ -20,6 +20,7 @@
                 <input id="uid" type="text" placeholder="Username" > </input>
                 <input id="pwd" type="password" placeholder="Password"> </input>
                 <input id="pwdRep" type="password" placeholder="Password repeat"> </input>
+                <p id="passmatch"></p>
                 <input id="register" type="submit" value="Submit Form"></input>
               </form>
               <script>
@@ -33,7 +34,13 @@
                   const uid = document.getElementById('uid').value;
                   const pwd = document.getElementById('pwd').value;
                   const dupPwd = document.getElementById('pwdRep').value;
-
+                  if(pwd != dupPwd){
+                    paragraph = document.getElementById("passmatch");
+                    paragraph.textContext = "Passwords do not match";
+                    paragraph.style.color = "red";
+                    alert("Passwords do not match");
+                    return;
+                  }
                   const result = await fetch('/api/register', {
                     method: 'POST',
                     headers: {
@@ -43,7 +50,6 @@
                       email, 
                       uid, 
                       pwd, 
-                      dupPwd
                     })
                   }).then((res) => res.json());
 
