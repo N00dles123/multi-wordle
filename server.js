@@ -9,6 +9,8 @@ const bcrypt = require('bcryptjs');
 const { Result } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
+// https://www.youtube.com/watch?v=Ejg7es3ba2k&ab_channel=codedamn
+// make sure to install jsonwebtoken and react 
 // so that token is not pushed to github
 require('dotenv').config();
 
@@ -18,6 +20,7 @@ const uri = process.env.ATLAS_URI;
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// to connect with mongodb
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -25,6 +28,7 @@ mongoose.connect(uri, {
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+// for login
 app.post('/api/login', async (req, res) => {
     const {username, password} = req.body;
     console.log(username);
@@ -34,7 +38,7 @@ app.post('/api/login', async (req, res) => {
     if(!user) {
         return res.json({status: 'error', error: 'Invalid username/password'});
     }
-
+    // if successful password comparison, create a web token for cookie purpose
     if(await bcrypt.compare(password, user.password)){
         // success!
         const token = jwt.sign({email: user.email, username: user.uid}, JWT_SECRET);
@@ -46,6 +50,7 @@ app.post('/api/login', async (req, res) => {
     res.json({ status: 'error', error: 'Invalid username/password'});
 });
 
+// for registration to database
 app.post('/api/register', async (req, res) => {
     console.log(req.body);
 
@@ -78,6 +83,7 @@ app.post('/api/register', async (req, res) => {
     }
     res.json({ status: 'ok' });
 });
+
 
 console.log(__dirname);
 app.listen(port, () => {
