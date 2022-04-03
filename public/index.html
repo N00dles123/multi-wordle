@@ -5,14 +5,46 @@
       <title>Muldle - Multiplayer Wordle</title>
       <h1> Muldle - multiplayer wordle </h1>  
       <div id="container">
-            <!--<div class="card">
+            <div class="card">
               <h1 id = loginTitle>Login</h1>
-              <form id="login" method="post">
-                <input id="username" id="userid" placeholder="Username"> </input>
-                <input id="password" id="password" type="password" placeholder="Password"></input>
-                <button id="submit" type="submit" name="submit"> Login </button>
+              <form id="login-form">
+                <input id="userid" placeholder="Username"> </input>
+                <input id="password" type="password" placeholder="Password"></input>
+                <input id="login" type="submit" value="Login Form"></button>
               </form>
-            </div> -->
+              <script>
+                const loginForm = document.getElementById('login-form');
+                loginForm.addEventListener('submit', login);
+                
+                async function login(event){
+                  event.preventDefault();
+                  const username = document.getElementById('userid').value;
+                  const password = document.getElementById('password').value;
+
+                  const result = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    })
+                  }).then((res) => res.json());
+
+                  if(result.status === 'ok'){
+                    //everything is fine
+                    document.getElementById('userid').value = '';
+                    document.getElementById('password').value = '';
+
+                    alert('Login Success!');
+
+                  } else {
+                    alert(result.error);
+                  }
+                }
+              </script>
+            </div>
             <div class="signup">
               <h1 id = loginTitle>Don't Have an Account? Sign up</h1>
               <form id="reg-form">
@@ -20,7 +52,6 @@
                 <input id="uid" type="text" placeholder="Username" > </input>
                 <input id="pwd" type="password" placeholder="Password"> </input>
                 <input id="pwdRep" type="password" placeholder="Password repeat"> </input>
-                <p id="passmatch"></p>
                 <input id="register" type="submit" value="Submit Form"></input>
               </form>
               <script>
@@ -30,6 +61,7 @@
                 // will send data by JSON
                 async function registerUser(event) {
                   event.preventDefault();
+                  let origin = window.location;
                   const email = document.getElementById('userEmail').value;
                   const uid = document.getElementById('uid').value;
                   const pwd = document.getElementById('pwd').value;
@@ -58,7 +90,18 @@
                       numWins 
                     })
                   }).then((res) => res.json());
-                  //console.log(result);
+                  console.log(result);
+
+                  if(result.status === 'ok'){
+                    document.getElementById('userEmail').value = '';
+                    document.getElementById('uid').value = '';
+                    document.getElementById('pwd').value = '';
+                    document.getElementById('pwdRep').value = '';
+                    alert('Success motherfucker');
+                  } else {
+                    alert(result.error);
+                  }
+                  
                   //console.log(location.href);
                 }
               </script>
