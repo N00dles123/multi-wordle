@@ -20,7 +20,10 @@
                   event.preventDefault();
                   const username = document.getElementById('userid').value;
                   const password = document.getElementById('password').value;
-
+                  if(username == "" || password == ""){
+                    alert("there are empty fields!");
+                    return;
+                  }
                   const result = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
