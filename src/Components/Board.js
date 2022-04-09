@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GameContext } from "../GameContext";
 import Keyboard from './KeyBoard';
 
@@ -6,30 +6,53 @@ const numRows = 6;
 const squaresPerRow = 5;
 
 function Square(props) {
-    const squareStateStyle = ['green', 'red', 'yellow'];
-    const {board, rowNum, letterPos} = props;
-    const letter = board[rowNum - 1][letterPos];
-    //const letter = board[rowNum][letterPos];
     return (
         <div 
-            className={props.playerNum === 1 ?'guess-box ' : 'guest-box '} 
+            className={(props.playerNum === 1 ?'guess-box ' : 'guest-box ') + props.letterState} 
             id={props.id}>
-            {letter}
+            {props.letter}
         </div>
     );
 }
 
 function Row(props) { 
+    const states=['correct', 'notQuite', 'error'];
+    const squareState =Array(squaresPerRow).fill('');
+    const {answer, attemptNum} = useContext(GameContext).state;
+    let correctWord = answer;
+
+    // Set color state of each square
+    if(props.rowNum - 1 < attemptNum) {
+        // Handle cases for correct characters
+        for(let i = 0; i < squaresPerRow; i++){
+            const letter = props.board[props.rowNum - 1][i]
+            if (letter === answer[i]) {
+                squareState[i] = states[0];
+                correctWord = correctWord.replace(props.board[props.rowNum-1][i], ' ');
+            }
+        }
+        // Handle for letters that are in the wrong positon
+        for(let i = 0; i < squaresPerRow; i++){
+            const letter = props.board[props.rowNum - 1][i]
+            if(squareState[i] !== states[0] && letter !== '' &&
+                correctWord.includes(letter)){
+                squareState[i] = states[1];
+                correctWord = correctWord.replace(props.board[props.rowNum-1][i], '');
+                if(squareState[i] !== states[0] && squareState[i] !== states[1]) {
+                    squareState[i] = states[2];
+                }
+            }
+        }
+    }
+
     const squares =[];
     for (let i = 0; i < squaresPerRow; i++){
         squares.push(
         <Square 
             id={'row' + props.rowNum + 'box' + (i + 1)}
-            rowNum={props.rowNum}
             playerNum={props.playerNum}
-            letterPos={i}
-            board={props.board}
-            color={'green'} />
+            letter={props.board[props.rowNum - 1][i]}
+            letterState={squareState[i]}/>
         );
     }
     return squares;
@@ -38,24 +61,23 @@ function Row(props) {
 class Board extends React.Component { 
     static contextType = GameContext;
     renderRow(rowNum) {
+        const {board, opponentboard} = this.context.state;
         return(
             <div className='game-row' id={'gamerow' + rowNum}>
                 <Row 
                     rowNum={rowNum}
                     playerNum={this.props.playerNum}
-                    board={this.context.board}
+                    board={this.props.playerNum === 1 ? board : opponentboard}
                 />
             </div>
         );
     }
 
     render() {
-        console.log(this.context.board);
         const rows = [];
         for(let i = 0; i < numRows; i++){
             rows.push(this.renderRow(i + 1));
         }
-        console.log(this.context);
 
         return (
             <div className="board-container">

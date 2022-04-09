@@ -1,17 +1,17 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import { GameContext } from "../GameContext";
 
 function Button(props) {
-    
+    const {onEnter, onDelete, onInput} = useContext(GameContext);
     const inputLetter = () => {
-        if(props.value === "ENTER") {
-            props.onEnter();
+        if(props.value === "Enter") {
+            onEnter();
         }
-        else if (props.value === "BACK") {
-            props.onDelete();
+        else if (props.value === "Back") {
+            onDelete();
         }
         else {
-            props.onClick(props.value);
+            onInput(props.value);
         }
     };
 
@@ -19,10 +19,10 @@ function Button(props) {
         <button 
             value={props.value}
             id={props.value}
-            className='key'
+            className={'key '}
             onClick={inputLetter}>
                 {props.value}
-            </button>
+        </button>
     );
 }
 
@@ -31,37 +31,37 @@ class Keyboard extends React.Component {
     renderRow(keys) {
         const row = [];
         keys.forEach(element => {
-            row.push(<Button 
-                value={element}
-                onClick={this.context.keyboard}/>)
-        });
+            row.push(<Button value={element}/>)
+            });
         
         return (<div className='row'> {row} </div>);
     }
 
-    handleClick(e) {
-        console.log(e + ' pressed');
-    }
-
     handleKeyboard(e){
         if(e.key === "Enter") {
-            console.log("Enter!!!!");
+            this.context.onEnter();
         } else if(e.key === "Backspace") {
-            console.log("Backspace!!");
+            this.context.onDelete();
         } else {
-            console.log('keyboard pressed' + e.key);
+            console.log(e.key.length);
+            if(/^[a-zA-Z]+$/.test(e.key) && e.key.length === 1) {
+                this.context.onInput(e.key);
+            }
         }
     }
 
     componentDidMount() {
         document.addEventListener('keydown', e => {this.handleKeyboard(e)});
-        console.log("HI" + this.context.board);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', e => {this.handleKeyboard(e)});
     }
 
     render() {   
-        const keys1 = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
-        const keys2 = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
-        const keys3 = ['enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'back']; 
+        const keys1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
+        const keys2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
+        const keys3 = ['Enter', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Back']; 
         return (
             <div id='keyboard'>
                 {this.renderRow(keys1)}
