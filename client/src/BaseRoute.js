@@ -4,12 +4,12 @@ import authenticate from './authenticate';
 
 // checks to see whether user is logged in before routing to destination
 
-function ProtectedRoute({component: Component}) {
+function BaseRoute({component: Component}) {
     const isAuthenticated = authenticate();
     //console.log(isAuthenticated);
     return (
-                isAuthenticated ? <Component/> : <Navigate replace to="/default" />
+                !isAuthenticated ? <Component/> : <Navigate replace to="/dashboard" />
     )
 }
 
-export default ProtectedRoute;
+export default BaseRoute;

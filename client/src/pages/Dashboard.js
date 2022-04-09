@@ -19,6 +19,9 @@ const Dashboard = () => {
         }) 
         const data = await response.json();
         console.log(data);
+        if(data.status === 'ok'){
+            alert("Logout Success")
+        }
         history("/");
     
     }
