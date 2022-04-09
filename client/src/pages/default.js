@@ -73,56 +73,71 @@ function App() {
 
   return (
       <div>
-        <title>Muldle - Multiplayer Wordle</title>
-        <h1> Muldle - multiplayer wordle </h1> 
-      <div>
+        <nav class="top-bar b-b-blue">
+            <div class="nav-left" onclick="onNavClick()"> Nav </div>
+            <div class="title"> Muldle </div>
+            <button class="nav-right" onclick="onAccountClick()">Account</button>
+        </nav>
+      <div class="login-container">
         <h1> Login</h1>
-        <form onSubmit={loginUser}>
+        <form class="login-form" onSubmit={loginUser}>
+          <div class="input-container">
           <input
             value={username}
             onChange={(e) => getUsername(e.target.value)}
             type="text"
             placeholder="Username"
           />
+          </div>
+          <div class="input-container">
           <input
             value={password}
             onChange={(e) => getPassword(e.target.value)}
             type="password"
             placeholder="Password"
           />
+          </div>
           <input
             type="submit"
             value="Login"
           />
         </form>
       </div>
-      <div>
+      <div class="login-container">
         <h1> Don't Have an Account? Sign up</h1>
-        <form onSubmit={registerUser}>
+        <form class="login-form" onSubmit={registerUser}>
+        <div class="input-container">
             <input 
               value={email}
               onChange={(e) => setEmail(e.target.value)} 
               type="email" 
               placeholder="Your Email"
             />
+            </div>
+            <div class="input-container">
             <input
               value={uid}
               onChange={(e) => setUid(e.target.value)}
               type="text"
               placeholder="Your Username"
             />
+            </div>
+            <div class="input-container">
             <input
               value={pwd}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Your Password"
             />
+            </div>
+            <div class="input-container">
             <input
               value={pwdRep}
               onChange={(e) => pwdCheck(e.target.value)}
               type="password"
               placeholder="Confirm Password"
             />
+            </div>
             <input 
               type="submit" 
               value="Register"
