@@ -43,6 +43,10 @@ function App() {
     event.preventDefault();
     const numWins = 0;
     const ifOnline = false;
+    if(email === "" || uid ==="" || pwd === "" || pwdRep === ""){
+      alert("There are empty fields")
+      return;
+    }
     if(pwdRep !== pwd){
       alert('Passwords Do not Match')
       return;
@@ -62,13 +66,17 @@ function App() {
     })
 
     const data = await response.json();
+    if(data.status === 'error'){
+      alert(data.error)
+    }
     if(data.status === 'ok'){
       setUid("");
       setEmail('');
       setPassword('');
       pwdCheck('');
+      console.log(data);
     }
-    console.log(data);
+    
   }
 
   return (
