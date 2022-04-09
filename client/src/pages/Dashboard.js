@@ -42,9 +42,7 @@ const Dashboard = () => {
         
     }
     useEffect(() => {
-
         const token = localStorage.getItem('token')
-        populateBoard();
         if(token) {
             var user = jwt_decode(token);
             console.log(user)

@@ -77,7 +77,7 @@ app.post('/api/login', async (req, res) => {
     // if successful password comparison, create a web token for cookie purpose
     if(await bcrypt.compare(password, user.password)){
         //console.log(user.email);
-        // success!
+        console.log("success");
         // updates user status to online
         //User.updateOne({uid: username}, {ifOnline: true})
         const token = jwt.sign({email: user.email, username: user.uid, numWins: user.numWins}, JWT_SECRET, {expiresIn: "2h"});
@@ -103,7 +103,7 @@ app.post('/api/register', async (req, res) => {
     }
     // hash passwords to prevent stealing of data :)
     const password = await bcrypt.hash(pwd, 10);
-    console.log(password);
+    //console.log(password);
     try {
         const res = await User.create({
             email,
@@ -112,7 +112,7 @@ app.post('/api/register', async (req, res) => {
             numWins,
             ifOnline
         });
-        console.log("User created Successfully" , res);
+        
     } catch(error){
         //console.log(error);
         if(error.code === 11000){
