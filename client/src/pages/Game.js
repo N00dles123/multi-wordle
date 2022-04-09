@@ -87,6 +87,7 @@ class Game extends React.Component {
     }
 
     render() {
+        console.log(this.state.answer);
         return (
             <div>
                 <Header />

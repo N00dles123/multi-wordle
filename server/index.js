@@ -87,9 +87,6 @@ app.post('/api/login', async (req, res) => {
     } else {
         return res.json({ status: 'error', data: false });
     }
-
-
-    res.json({ status: 'error', error: 'Invalid username/password'});
 });
 
 // for registration to database
@@ -126,12 +123,6 @@ app.post('/api/register', async (req, res) => {
     }
     res.json({ status: 'ok' });
 });
-
-// for logging user out fafsf
-app.post('/api/user', async (req, res) => {
-    
-
-})
 
 // update info will work on later
 /*app.post('/api/user', async(req, res) => {

@@ -20,7 +20,6 @@ function Row(props) {
     const squareState =Array(squaresPerRow).fill('');
     const {answer, attemptNum} = useContext(GameContext).state;
     let correctWord = answer;
-
     // Set color state of each square
     if(props.rowNum - 1 < attemptNum) {
         // Handle cases for correct characters
@@ -78,7 +77,6 @@ class Board extends React.Component {
         for(let i = 0; i < numRows; i++){
             rows.push(this.renderRow(i + 1));
         }
-
         return (
             <div className="board-container">
                 <div className="board-title"> Your Board </div>

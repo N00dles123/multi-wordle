@@ -8,15 +8,7 @@ const Dashboard = () => {
     // logs out user --still needs some work
     async function logoutUser(event){
         event.preventDefault()
-        const response = await fetch('http://localhost:9999/api/user', {
-            method: 'POST',
-            headers: {
-                'x-access-token': localStorage.removeItem('token')
-            },
-            
-        })
-        const data = await response.json();
-        localStorage.removeItem('token');
+        localStorage.removeItem('token')
         history("/");
     
     }
@@ -40,7 +32,15 @@ const Dashboard = () => {
 
         
     }
-
+    function isExpired(user){
+        var currentDateTime = new Date();
+        console.log(user.exp - currentDateTime.getTime()/1000)
+        if(user.exp < currentDateTime.getTime()/1000)
+            return true;
+        else
+            return false;
+        
+    }
     useEffect(() => {
 
         const token = localStorage.getItem('token')
@@ -48,8 +48,8 @@ const Dashboard = () => {
         if(token) {
             var user = jwt_decode(token);
             console.log(user)
-            if(!user){
-                console.log("failed");
+            if(isExpired(user)){
+                console.log("expired");
                 localStorage.removeItem('token')
                 history('/default')
             } else {
