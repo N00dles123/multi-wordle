@@ -47,8 +47,8 @@ const Dashboard = () => {
         populateBoard();
         if(token) {
             var user = jwt_decode(token);
-            //console.log(user)
-            if(user.status === "error"){
+            console.log(user)
+            if(!user){
                 console.log("failed");
                 localStorage.removeItem('token')
                 history('/default')
