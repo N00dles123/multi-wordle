@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs');
 const { Result } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const { application } = require("express");
+const { application } = require('express')
 const { resolveAny } = require("dns");
 const io = require("socket.io");
 
@@ -137,6 +137,16 @@ app.post('/api/register', async (req, res) => {
     }
 
 }) */
+
+// for logout 
+app.post('/api/logout', async(req, res) => {
+    const token = req.headers['x-access-token'];
+    if(token == 'null'){
+        return res.json({status: 'ok'});
+    } else {
+        return res.json({ status: 'error', error: "Token was not deleted successfully"})
+    }
+})
 
 console.log(__dirname);
 app.listen(port, () => {
