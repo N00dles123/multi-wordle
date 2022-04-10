@@ -17,7 +17,7 @@ function App() {
       alert("There are empty fields")
       return;
     }
-    const response = await fetch('http://localhost:9999/api/login', {
+    const response = await fetch('http://localhost:3001/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ function App() {
       alert('Passwords Do not Match')
       return;
     }
-    const response = await fetch('http://localhost:9999/api/register', {
+    const response = await fetch('http://localhost:3001/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

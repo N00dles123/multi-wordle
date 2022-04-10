@@ -2,6 +2,9 @@ import React, { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 
+
+
+
 const Dashboard = () => {
     const history = useNavigate()
     const [username, setUsername] = useState('');
@@ -11,7 +14,7 @@ const Dashboard = () => {
         event.preventDefault()
         
         localStorage.removeItem('token');
-        const response = await fetch('http://localhost:9999/api/logout', {
+        const response = await fetch('http://localhost:3001/api/logout', {
             method: 'POST',
             headers: {
                 'x-access-token': localStorage.getItem('token'),
@@ -26,7 +29,7 @@ const Dashboard = () => {
     
     }
     async function populateBoard() {
-        await fetch('http://localhost:9999/api/user', {
+        await fetch('http://localhost:3001/api/user', {
             method: 'GET',
             headers: {
                 'x-access-token': localStorage.getItem('token'),
@@ -57,6 +60,7 @@ const Dashboard = () => {
         
     }
     useEffect(() => {
+        
         const token = localStorage.getItem('token')
         if(token) {
             var user = jwt_decode(token);
@@ -68,6 +72,7 @@ const Dashboard = () => {
             } else {
                 //console.log(user.username);
                 populateBoard();
+                
             }
         } else {
             history('/default')

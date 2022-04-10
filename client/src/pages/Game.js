@@ -5,7 +5,10 @@ import words from '../Components/Words';
 import Header from '../Components/Header';
 import StatusWindow from '../Components/StatusWindow';
 import { GameContext } from '../Components/GameContext';
+import io from 'socket.io-client';
 
+const ENDPOINT = "http://localhost:3001"
+var socket, gameRoom
 const numRows = 6;
 const squaresPerRow = 5;
 
@@ -31,7 +34,9 @@ class Game extends React.Component {
         this.onDelete = this.onDelete.bind(this);
         this.closeStatus = this.closeStatus.bind(this);
     }
-
+    componentDidMount(){
+        socket = io(ENDPOINT)
+    }
     onInputLetter(key){
         const {board, letterPos, attemptNum} = this.state;
         if(this.state.gameover || letterPos > squaresPerRow - 1) {return;}

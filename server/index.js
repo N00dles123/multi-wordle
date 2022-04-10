@@ -2,7 +2,8 @@
 // for video https://www.youtube.com/watch?v=b91XgdyX-SM&t=570s&ab_channel=codedamn  at 31:08 checking error codes
 const express = require("express");
 const path = require('path');
-const bodyParser = require('body-parser');
+const http = require('http');
+//const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const bcrypt = require('bcryptjs');
@@ -11,7 +12,7 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const { application } = require('express')
 const { resolveAny } = require("dns");
-const io = require("socket.io");
+
 
 
 
@@ -20,7 +21,7 @@ const io = require("socket.io");
 // so that token is not pushed to github
 require('dotenv').config();
 
-const port = '9999';
+const port = '3001';
 const app = express();
 app.use(cors());
 const uri = process.env.ATLAS_URI;
@@ -33,8 +34,10 @@ mongoose.connect(uri, {
     useUnifiedTopology: true
 });
 //app.use(express.static('public'));
-app.use(bodyParser.json());
+app.use(express.json());
 
+
+//const io = new Server(server, )
 // for api for dashboard 
 app.get('/api/user', async (req, res) => {
     //console.log(username);
@@ -69,7 +72,7 @@ app.post('/api/login', async (req, res) => {
     //console.log(username);
 
     const user = await User.findOne({uid: username}).lean();
-
+    
 
     if(!user) {
         return res.json({status: 'error', error: 'Invalid username/password'});
@@ -83,6 +86,8 @@ app.post('/api/login', async (req, res) => {
         const token = jwt.sign({email: user.email, username: user.uid, numWins: user.numWins}, JWT_SECRET, {expiresIn: "2h"});
         //await User.findOneAndUpdate({uid: username}, {token: token}, {new: true, upsert: true})
         //console.log(res.json({status: 'ok', data: token}));
+       
+        
         return res.json({status: 'ok', data: token});
     } else {
         return res.json({ status: 'error', data: false });
@@ -148,7 +153,23 @@ app.post('/api/logout', async(req, res) => {
     }
 })
 
-console.log(__dirname);
-app.listen(port, () => {
-    console.log('Server up at 9999');
+const server = app.listen(port, () => {
+    console.log('Server up at 3001');
 });
+
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log("User Connected", socket.id);
+    socket.on("disconnect", () => {
+        console.log("User Disconnected", socket.id);
+    })
+})
+
+console.log(__dirname);
+
+
