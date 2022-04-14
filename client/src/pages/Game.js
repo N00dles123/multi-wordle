@@ -11,8 +11,11 @@ const ENDPOINT = "http://localhost:3001"
 var socket, gameRoom
 const numRows = 6;
 const squaresPerRow = 5;
-
+const roomcode = localStorage.getItem('roomcode');
+// game starts when both players are in the same room
+const gameStart = false;
 class Game extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +38,13 @@ class Game extends React.Component {
         this.closeStatus = this.closeStatus.bind(this);
     }
     componentDidMount(){
-        socket = io(ENDPOINT)
+        if(roomcode === ""){
+            window.location.href = '/dashboard';
+        } else {
+            socket = io(ENDPOINT)
+            socket.emit("join_room", roomcode);
+            
+        }
     }
     onInputLetter(key){
         const {board, letterPos, attemptNum} = this.state;
@@ -92,6 +101,7 @@ class Game extends React.Component {
     }
 
     render() {
+        console.log(localStorage.getItem('roomcode'))
         console.log(this.state.answer);
         return (
             <div>

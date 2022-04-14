@@ -9,9 +9,10 @@ function App() {
 
   const[username, getUsername] = useState('')
   const[password, getPassword] = useState('')
-
+  
   // working on this still
   async function loginUser(event){
+    localStorage.setItem('roomcode', "");
     event.preventDefault();
     if(username === "" || password ===""){
       alert("There are empty fields")
@@ -82,9 +83,9 @@ function App() {
   return (
       <div>
         <nav class="top-bar b-b-blue">
-            <div class="nav-left" onclick="onNavClick()"> Nav </div>
+            <div class="nav-left" onclick="onNavClick()"></div>
             <div class="title"> Muldle </div>
-            <button class="nav-right" onclick="onAccountClick()">Account</button>
+            <div class="nav-right" onclick="onAccountClick()"></div>
         </nav>
       <div class="login-container">
         <h1> Login</h1>

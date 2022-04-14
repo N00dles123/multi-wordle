@@ -6,11 +6,28 @@ import jwt_decode from 'jwt-decode'
 
 
 const Dashboard = () => {
+    localStorage.setItem('roomcode', "");
     const history = useNavigate()
     const [username, setUsername] = useState('');
     const [wins, setWins] = useState(0);
+    const[room, getRoom] = useState('');
+    // submits the room code
+    async function submitRoom(event){
+        event.preventDefault()
+        if(room === ""){
+            alert("Room code is empty")
+            return;
+        } else {
+            localStorage.setItem('roomcode', room);
+            console.log(localStorage.getItem('roomcode'));
+            window.location.href = '/game';
+        }
+    }
+    
+    
     // logs out user --still needs some work
     async function logoutUser(event){
+        console.log("button clicked!")
         event.preventDefault()
         
         localStorage.removeItem('token');
@@ -36,7 +53,7 @@ const Dashboard = () => {
             },
         }).then((req) => req.json())
         .then((user) => {
-            console.log(user.numWins);
+            //console.log(user.numWins);
             //const userData = 
             if(user.user !== null){
                 //console.log(user.user);
@@ -52,7 +69,7 @@ const Dashboard = () => {
     }
     function isExpired(user){
         var currentDateTime = new Date();
-        console.log(user.exp - currentDateTime.getTime()/1000)
+        //console.log(user.exp - currentDateTime.getTime()/1000)
         if(user.exp < currentDateTime.getTime()/1000)
             return true;
         else
@@ -60,11 +77,10 @@ const Dashboard = () => {
         
     }
     useEffect(() => {
-        
         const token = localStorage.getItem('token')
         if(token) {
             var user = jwt_decode(token);
-            console.log(user)
+            //console.log(user)
             if(isExpired(user)){
                 console.log("expired");
                 localStorage.removeItem('token')
@@ -80,14 +96,28 @@ const Dashboard = () => {
     })
 
     return <div>
+        <nav class="top-bar b-b-blue">
+            <div class="nav-left" onclick="onNavClick()"> </div>
+            <div class="title"> Muldle </div>
+            <button class="nav-right" onClick={logoutUser}>Logout</button>
+        </nav>
         <div><h1>Hello {username}</h1> </div>
         <div>You have {wins} wins</div>
-        <form onSubmit={logoutUser}>
-            <input
-                type="submit"
-                value="LogOut"
-            />
-        </form>
+        <div class="match-container">
+            <form class="find-match" onSubmit={submitRoom}>
+                <input
+                    value={room}
+                    onChange={(e) => getRoom(e.target.value)}
+                    type="text"
+                    placeholder="Enter a room code"
+                />
+                <input
+                    type="submit"
+                    value="Join Room"
+                />
+            </form>
+        </div>
+        
         </div>
 }
 
