@@ -38,12 +38,14 @@ class Game extends React.Component {
         this.closeStatus = this.closeStatus.bind(this);
     }
     componentDidMount(){
+        // checks to see if user has a roomcode, if not redirects to dashboard, if they do they continue into the room    
         if(roomcode === ""){
             window.location.href = '/dashboard';
         } else {
             socket = io(ENDPOINT)
             socket.emit("join_room", roomcode);
-            
+            //var room = io.sockets.adapter.rooms[roomcode];
+            //console.log(room.length);
         }
     }
     onInputLetter(key){

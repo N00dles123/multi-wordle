@@ -163,11 +163,25 @@ const io = require("socket.io")(server, {
     }
 });
 
+function getNumUsers(io, room){
+    const userRoom = io.sockets.adapters.rooms[room];
+    console.log(userRoom.length);
+}
+
 io.on("connection", (socket) => {
     console.log("User Connected", socket.id);
     socket.on("join_room", (data) => {
         socket.join(data);
+        //console.log(data.id);
+        const roomUsers = io.sockets.adapter.rooms.get(data).size;
+        /*io.to(data).emit('roomData', {
+            room: data,
+            users: getUsersInRoom(data)
+        }); */
         console.log(`User with ID: ${socket.id} joined room: ${data}`)
+        console.log(roomUsers);
+        //console.log(roomUsers.size);
+        //console.log(getNumUsers(socket, data));
     })
     socket.on("disconnect", () => {
         console.log("User Disconnected", socket.id);
