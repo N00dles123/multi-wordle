@@ -44,6 +44,7 @@ class Game extends React.Component {
         } else {
             socket = io(ENDPOINT)
             socket.emit("join_room", roomcode);
+            
             //var room = io.sockets.adapter.rooms[roomcode];
             //console.log(room.length);
         }

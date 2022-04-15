@@ -174,10 +174,6 @@ io.on("connection", (socket) => {
         socket.join(data);
         //console.log(data.id);
         const roomUsers = io.sockets.adapter.rooms.get(data).size;
-        /*io.to(data).emit('roomData', {
-            room: data,
-            users: getUsersInRoom(data)
-        }); */
         console.log(`User with ID: ${socket.id} joined room: ${data}`)
         console.log(roomUsers);
         //console.log(roomUsers.size);
