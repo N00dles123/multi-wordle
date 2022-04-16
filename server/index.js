@@ -12,6 +12,7 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const { application } = require('express')
 const { resolveAny } = require("dns");
+const { ClientUser } = require("discord.js");
 
 
 
@@ -171,11 +172,19 @@ function getNumUsers(io, room){
 io.on("connection", (socket) => {
     console.log("User Connected", socket.id);
     socket.on("join_room", (data) => {
-        socket.join(data);
-        //console.log(data.id);
-        const roomUsers = io.sockets.adapter.rooms.get(data).size;
-        console.log(`User with ID: ${socket.id} joined room: ${data}`)
-        console.log(roomUsers);
+        
+        const roomUsers = io.sockets.adapter.rooms.get(data);
+        var numClients = typeof roomUsers != "undefined" ? roomUsers.size : 0;
+        if(numClients <= 1){
+            socket.join(data);
+            //console.log(data.id);
+            const curStatus = io.sockets.adapter.rooms.get(data).size;
+            console.log(`User with ID: ${socket.id} joined room: ${data}`);
+            //socket.in(data).emit("Game start");
+            console.log(curStatus);
+        } else {
+            io.to(socket.id).emit("room_capacity", { message: "Theres already 2 people in the room!" })
+        }
         //console.log(roomUsers.size);
         //console.log(getNumUsers(socket, data));
     })
