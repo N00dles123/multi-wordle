@@ -14,8 +14,8 @@ const numRows = 6;
 const squaresPerRow = 5;
 const roomcode = localStorage.getItem('roomcode');
 const user = jwt_decode(localStorage.getItem('token'));
-// game starts when both players are in the same room
-const gameStart = false;
+// game starts when both players are in the same room change up the board effect
+var gameStart = false;
 
 // this will store username for title
 var otherUser;
@@ -50,6 +50,7 @@ const startGame = async () => {
             if(data.opponent !== user.username){
                 console.log(data.opponent)
                 otherUser = data.opponent;
+                gameStart = true;
             }
         }
     })
@@ -58,6 +59,7 @@ const startGame = async () => {
             if(data.opponent !== user.username){
                 console.log(data.opponent)
                 otherUser = data.opponent;
+                gameStart = true;
             }
         }
     })
