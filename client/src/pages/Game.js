@@ -13,9 +13,16 @@ var socket, gameRoom
 const numRows = 6;
 const squaresPerRow = 5;
 const roomcode = localStorage.getItem('roomcode');
-const user = jwt_decode(localStorage.getItem('token'));
+const token = localStorage.getItem('token')
+var user;
+if(token){ 
+    user = jwt_decode(token);
+    userName = user.username 
+}
+
 // holds user username
-const userName = user.username;
+const userName = "";
+
 // game starts when both players are in the same room change up the board effect
 var gameStart = false;
 
