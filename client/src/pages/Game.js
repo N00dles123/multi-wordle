@@ -6,14 +6,63 @@ import Header from '../Components/Header';
 import StatusWindow from '../Components/StatusWindow';
 import { GameContext } from '../Components/GameContext';
 import io from 'socket.io-client';
+import jwt_decode from 'jwt-decode'
 
 const ENDPOINT = "http://localhost:3001"
 var socket, gameRoom
 const numRows = 6;
 const squaresPerRow = 5;
 const roomcode = localStorage.getItem('roomcode');
+const user = jwt_decode(localStorage.getItem('token'));
 // game starts when both players are in the same room
 const gameStart = false;
+
+// this will store username for title
+var otherUser;
+
+const joinRoom = async () => {
+        
+        socket = io(ENDPOINT)
+        const userData = {
+            room: roomcode,
+            author: user.username,
+        }  
+        await socket.emit("join_room", userData);
+        startGame();
+        socket.on("room_capacity", (data) => {
+            window.location.href = '/dashboard'
+            alert(data.message);
+        })
+}
+
+// waiting on socket room to tell when theres 2 users in the room
+// create 2 diff socket.on one to use depending on scenarios
+
+const startGame = async () => {
+    const userData = {
+        room: roomcode,
+        author: user.username,
+    }  
+    socket.emit("gameStart", userData);
+    socket.on("game_start", (data) => {
+        if(data.status === "start"){
+            socket.emit("toOtherUser", userData);
+            if(data.opponent !== user.username){
+                console.log(data.opponent)
+                otherUser = data.opponent;
+            }
+        }
+    })
+    socket.on("updateUser", (data) => {
+        if(data.status === "start"){
+            if(data.opponent !== user.username){
+                console.log(data.opponent)
+                otherUser = data.opponent;
+            }
+        }
+    })
+}
+
 class Game extends React.Component {
     
     constructor(props) {
@@ -37,20 +86,20 @@ class Game extends React.Component {
         this.onDelete = this.onDelete.bind(this);
         this.closeStatus = this.closeStatus.bind(this);
     }
+    
+     
+
     componentDidMount(){
         // checks to see if user has a roomcode, if not redirects to dashboard, if they do they continue into the room    
         if(roomcode === ""){
-            window.location.href = '/dashboard';
+            window.location.href= "/dashboard";
         } else {
-            socket = io(ENDPOINT)
-            socket.emit("join_room", roomcode);
-            socket.on("room_capacity", (data) => {
-                window.location.href = '/dashboard'
-                alert(data.message);
-            })
-            //var room = io.sockets.adapter.rooms[roomcode];
-            //console.log(room.length);
+            joinRoom();
+            if(otherUser){
+                // make changes to opponent board title <----------------- for kyle
+            }
         }
+        
     }
     onInputLetter(key){
         const {board, letterPos, attemptNum} = this.state;

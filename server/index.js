@@ -12,9 +12,6 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const { application } = require('express')
 const { resolveAny } = require("dns");
-const { ClientUser } = require("discord.js");
-
-
 
 
 // https://www.youtube.com/watch?v=Ejg7es3ba2k&ab_channel=codedamn
@@ -164,36 +161,47 @@ const io = require("socket.io")(server, {
     }
 });
 
-function getNumUsers(io, room){
-    const userRoom = io.sockets.adapters.rooms[room];
-    console.log(userRoom.length);
-}
 
 io.on("connection", (socket) => {
     console.log("User Connected", socket.id);
     socket.on("join_room", (data) => {
         
-        const roomUsers = io.sockets.adapter.rooms.get(data);
+        const roomUsers = io.sockets.adapter.rooms.get(data.room);
         var numClients = typeof roomUsers != "undefined" ? roomUsers.size : 0;
+        //console.log(numClients)
         // checks for room size
-        // if greater than 1, then kick client out
+        // if greater than 1, kick client out
         if(numClients <= 1){
-            socket.join(data);
+            socket.join(data.room);
             //console.log(data.id);
-            const curStatus = io.sockets.adapter.rooms.get(data).size;
-            console.log(`User with ID: ${socket.id} joined room: ${data}`);
+            console.log(`User with ID: ${data.author} joined room: ${data.room}`);
             //socket.in(data).emit("Game start");
+            var curStatus = io.sockets.adapter.rooms.get(data.room).size;
+            io.to(data.room).emit("game_start", { status: "start", opponent: data.author})
             console.log(curStatus);
         } else {
             io.to(socket.id).emit("room_capacity", { message: "Theres already 2 people in the room!" })
         }
-        //console.log(roomUsers.size);
-        //console.log(getNumUsers(socket, data));
+    })
+    socket.on("gameStart", (data) => {
+        const roomUsers = io.sockets.adapter.rooms.get(data.room);
+        console.log(roomUsers.size);
+        const roomSize = roomUsers.size
+        if(roomSize == 2){
+            socket.to(data.room).emit("game_start", { status: "start", opponent: data.author})
+            //socket.to(data.room).emit("game_start", { status: "start", opponent: data.author})
+        }
+
+    })
+    socket.on("toOtherUser", (data) => {
+        socket.to(data.room).emit("updateUser", { status: "start", opponent: data.author})
     })
     socket.on("disconnect", () => {
         console.log("User Disconnected", socket.id);
     })
 })
+
+
 
 console.log(__dirname);
 
