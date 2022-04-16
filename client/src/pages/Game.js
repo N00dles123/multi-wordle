@@ -14,14 +14,15 @@ const numRows = 6;
 const squaresPerRow = 5;
 const roomcode = localStorage.getItem('roomcode');
 const token = localStorage.getItem('token')
+// holds user username
+var userName = "";
 var user;
 if(token){ 
     user = jwt_decode(token);
     userName = user.username 
 }
 
-// holds user username
-const userName = "";
+
 
 // game starts when both players are in the same room change up the board effect
 var gameStart = false;
