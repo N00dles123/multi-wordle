@@ -175,6 +175,8 @@ io.on("connection", (socket) => {
         
         const roomUsers = io.sockets.adapter.rooms.get(data);
         var numClients = typeof roomUsers != "undefined" ? roomUsers.size : 0;
+        // checks for room size
+        // if greater than 1, then kick client out
         if(numClients <= 1){
             socket.join(data);
             //console.log(data.id);
