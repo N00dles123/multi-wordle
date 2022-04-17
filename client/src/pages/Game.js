@@ -46,6 +46,25 @@ const joinRoom = async () => {
         })
 }
 
+
+const updateBoard = async () => {
+    
+    socket.on("gameWin", (data) => {
+        alert(data.message)
+    })
+    // data will be composed of wordarr which has an array of colors for example [green, black, yellow, green, black], message which is what has occurred
+    socket.on("gameOver", (data) => {
+        // try to send this array to update opponent board
+        var updatedArray = data.wordarr
+        alert(data.message +  ". The word was " + data.gameWord)
+    })
+    socket.on("wrongWord", (data) => {
+        var updatedArray = data.wordarr
+        // do something based off this array
+        // array will consist of "green", "yellow", or "black" array size is 5
+    })
+    
+}
 // waiting on socket room to tell when theres 2 users in the room
 // create 2 diff socket.on one to use depending on scenarios
 
@@ -119,53 +138,64 @@ class Game extends React.Component {
         
     }
     onInputLetter(key){
-        const {board, letterPos, attemptNum} = this.state;
-        if(this.state.gameover || letterPos > squaresPerRow - 1) {return;}
-        board[attemptNum][letterPos] = key;
-        this.setState({
-            board: board,
-            letterPos: letterPos + 1
-        });
-    }
-
-    onEnter() {
-        const {board, letterPos, attemptNum, answer} = this.state;
-        if(letterPos !== squaresPerRow) {
-            // do something make status appear
-            this.setState({notify: true, status: "not enough letters"});
-            return;
-        }
-
-        let guess = "";
-        for(let i = 0; i < squaresPerRow; i++){
-            guess += board[attemptNum][i];
-        }
-        guess = guess.toLowerCase();
-        if(guess === answer) {
-            this.setState({attemptNum: attemptNum + 1,
-                letterPos: 0, gameover: true, guessedWord: true,
-                notify: true, status: "You won!!"});
-        }
-        else if(gameWord.has(guess)) {
+        if(gameStart){
+            const {board, letterPos, attemptNum} = this.state;
+            if(this.state.gameover || letterPos > squaresPerRow - 1) {return;}
+            board[attemptNum][letterPos] = key;
             this.setState({
-                attemptNum: attemptNum + 1,
-                letterPos: 0
+                board: board,
+                letterPos: letterPos + 1
             });
         }
-        else {
-            this.setState({notify: true, status: 'Not a valid word'});
+    }
+    
+    onEnter() {
+        const {board, letterPos, attemptNum, answer} = this.state;
+        if(gameStart && attemptNum < numRows){
+            if(letterPos !== squaresPerRow) {
+                // do something make status appear
+                this.setState({notify: true, status: "not enough letters"});
+                return;
+            }
+
+            let guess = "";
+            for(let i = 0; i < squaresPerRow; i++){
+                guess += board[attemptNum][i];
+            }
+            guess = guess.toLowerCase();
+            if(guess === answer) {
+                this.setState({attemptNum: attemptNum + 1,
+                    letterPos: 0, gameover: true, guessedWord: true,
+                    notify: true, status: "You won!!"});
+            }
+            else if(gameWord.has(guess)) {
+                this.setState({
+                    attemptNum: attemptNum + 1,
+                    letterPos: 0
+                });
+                // sends word data to backend
+                socket.emit("checkWord", {guessWord: guess, userWord: gameWord, username: userName, attempt: attemptNum, room: roomcode})
+                updateBoard();
+
+                
+            }
+            else{
+                this.setState({notify: true, status: 'Not a valid word'});
+            }
+            return null;
+        } else if(gameStart && attemptNum === numRows){
+
         }
-        return null;
     }
 
     onDelete() {
-        const {board, letterPos, attemptNum} = this.state;
-        if(letterPos === 0) {return;}
-        board[attemptNum][letterPos - 1] = '';
-        this.setState({
-            board: board,
-            letterPos: letterPos - 1
-        });
+            const {board, letterPos, attemptNum} = this.state;
+            if(letterPos === 0 && !gameStart) {return;}
+            board[attemptNum][letterPos - 1] = '';
+            this.setState({
+                board: board,
+                letterPos: letterPos - 1
+            });
     }
 
     closeStatus() {

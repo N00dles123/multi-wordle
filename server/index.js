@@ -206,6 +206,56 @@ io.on("connection", (socket) => {
         socket.to(data.room).emit("updateUser", { status: "start", opponent: data.author})
         io.to(data.room).emit("createWord", { userWord: getRandomWord()})
     })
+    // data will include sender, user guess, and user word
+    socket.on("checkWord", (data) => {
+        var wordData = ["", "", "", "", ""];
+        if(data.guessWord == data.userWord && data.attempt < 6){
+            io.to(socket.id).emit("gameWin", { wordarr: ["green", "green", "green", "green", "green"] ,message: "You have won the game!"})
+            socket.to(data.room).emit("gameOver", { wordarr: ["green", "green", "green", "green", "green"], message: "You have lost the game", gameWord: data.userWord })
+        } else if(data.attempt < 6){
+            let guessWord = data.guessWord
+            // processes guess
+            let hashmap = new Map();
+            // sets up processing
+            for(let i = 0; i < 5; i++){
+                let letter = data.userWord.charAt(i)
+                if(hashmap.has(letter)){
+                    hashmap.set(letter, hashmap.get(letter) + 1)
+                } else {
+                    hashmap.set(letter, 1)
+                }
+            }
+            // now set colors of array to send over
+            for(let i = 0; i < 5; i++){
+                // process for greens first
+                let guess = guessWord.charAt(i)
+                if(guess == data.userWord.charAt(i)){
+                    wordData[i] = "green";
+                    if(hashmap.get(guess) == 1){
+                        hashmap.delete(guess);
+                    } else {
+                        hashmap.set(guess, (hashmap.get(guess) - 1))
+                    }
+                }
+            }
+            // looping to process yellows and nonexistents 
+            for(let i = 0; i < 5; i++){
+                let guess = guessWord.charAt(i)
+                if(hashmap.has(guess) && wordData[i] != "green"){
+                    wordData[i] = "yellow";
+                    // removes guess from hashmap
+                    if(hashmap.get(guess) > 1){
+                        hashmap.set(guess, (hashmap.get(guess) - 1))
+                    } else {
+                        hashmap.delete(guess);
+                    }
+                } else if(!hashmap.has(guess) && wordData[i] != "green"){
+                    wordData[i] = "black"
+                }
+            }
+            socket.to(data.room).emit("wrongWord", { wordArr: wordData})
+        }
+    })
     
     socket.on("disconnect", () => {
         console.log("User Disconnected", socket.id);
