@@ -253,7 +253,7 @@ io.on("connection", (socket) => {
                     wordData[i] = "black"
                 }
             }
-            socket.to(data.room).emit("wrongWord", { wordArr: wordData})
+            socket.to(data.room).emit("wrongWord", { wordarr: wordData})
         }
     })
     
