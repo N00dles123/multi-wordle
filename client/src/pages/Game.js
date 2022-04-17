@@ -9,9 +9,10 @@ import io from 'socket.io-client';
 import jwt_decode from 'jwt-decode'
 
 const ENDPOINT = "http://localhost:3001"
-var socket, gameRoom
+var socket
 const numRows = 6;
 const squaresPerRow = 5;
+var gameWord;
 const roomcode = localStorage.getItem('roomcode');
 const token = localStorage.getItem('token')
 // holds user username
@@ -52,15 +53,15 @@ const startGame = async () => {
     const userData = {
         room: roomcode,
         author: user.username,
-    }  
+    }
     socket.emit("gameStart", userData);
     socket.on("game_start", (data) => {
         if(data.status === "start"){
+           
             socket.emit("toOtherUser", userData);
             if(data.opponent !== user.username){
                 console.log(data.opponent)
                 otherUser = data.opponent;
-                gameStart = true;
             }
         }
     })
@@ -69,9 +70,13 @@ const startGame = async () => {
             if(data.opponent !== user.username){
                 console.log(data.opponent)
                 otherUser = data.opponent;
-                gameStart = true;
             }
         }
+    })
+    socket.on("createWord", (data) => {
+        gameWord = data.userWord;
+        console.log(gameWord)
+        gameStart = true;
     })
 }
 
@@ -80,7 +85,7 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            answer: getRandomWord(),
+            answer: gameWord,
             board: Array(numRows).fill().map(() => Array(squaresPerRow).fill("")),
             opponentboard: Array(numRows).fill().map(() => Array(squaresPerRow).fill("")),
             correctLetters: [],
@@ -141,7 +146,7 @@ class Game extends React.Component {
                 letterPos: 0, gameover: true, guessedWord: true,
                 notify: true, status: "You won!!"});
         }
-        else if(words.has(guess)) {
+        else if(gameWord.has(guess)) {
             this.setState({
                 attemptNum: attemptNum + 1,
                 letterPos: 0
@@ -192,12 +197,7 @@ class Game extends React.Component {
 }
 
 
-// for testing prints random word
-//keyboard still needs work incomplete
-function getRandomWord(){
-    let array = Array.from(words);
-    return array[Math.floor(Math.random() * array.length)];
-}
+
 
 //function changes the div color based on letter positioning
 // so by using a map we can keep track of how many times each letter appears in real word

@@ -12,6 +12,7 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const { application } = require('express')
 const { resolveAny } = require("dns");
+const words = require('./models/Words');
 
 
 // https://www.youtube.com/watch?v=Ejg7es3ba2k&ab_channel=codedamn
@@ -19,12 +20,19 @@ const { resolveAny } = require("dns");
 // so that token is not pushed to github
 require('dotenv').config();
 
+const word = getRandomWord()
 const port = '3001';
 const app = express();
 app.use(cors());
 const uri = process.env.ATLAS_URI;
 
 const JWT_SECRET = process.env.JWT_SECRET;
+
+function getRandomWord(){
+    let array = Array.from(words);
+    return array[Math.floor(Math.random() * array.length)];
+}
+
 
 // to connect with mongodb
 mongoose.connect(uri, {
@@ -161,23 +169,24 @@ const io = require("socket.io")(server, {
     }
 });
 
-
+// create and send word on join room
 io.on("connection", (socket) => {
     console.log("User Connected", socket.id);
     socket.on("join_room", (data) => {
         
         const roomUsers = io.sockets.adapter.rooms.get(data.room);
         var numClients = typeof roomUsers != "undefined" ? roomUsers.size : 0;
-        //console.log(numClients)
         // checks for room size
         // if greater than 1, kick client out
         if(numClients <= 1){
+            // userWord will choose the random word for the game
+            var userWord = getRandomWord;
             socket.join(data.room);
             //console.log(data.id);
             console.log(`User with ID: ${data.author} joined room: ${data.room}`);
             //socket.in(data).emit("Game start");
             var curStatus = io.sockets.adapter.rooms.get(data.room).size;
-            io.to(data.room).emit("game_start", { status: "start", opponent: data.author})
+            io.to(data.room).emit("game_start", { status: "start", opponent: data.author, word: userWord})
             console.log(curStatus);
         } else {
             io.to(socket.id).emit("room_capacity", { message: "Theres already 2 people in the room!" })
@@ -195,7 +204,9 @@ io.on("connection", (socket) => {
     })
     socket.on("toOtherUser", (data) => {
         socket.to(data.room).emit("updateUser", { status: "start", opponent: data.author})
+        io.to(data.room).emit("createWord", { userWord: getRandomWord()})
     })
+    
     socket.on("disconnect", () => {
         console.log("User Disconnected", socket.id);
     })

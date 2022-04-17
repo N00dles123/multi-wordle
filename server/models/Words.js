@@ -14,5 +14,5 @@ const words = new Set(["cigar","rebut","sissy","humph","awake","blush","focal","
 //keyboard still needs work incomplete
 
 
-export default words;
+module.exports = words;
 
