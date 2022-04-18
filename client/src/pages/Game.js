@@ -1,6 +1,6 @@
 import '../index.css'
 import Board from '../Components/Board';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import words from '../Components/Words';
 import Header from '../Components/Header';
 import StatusWindow from '../Components/StatusWindow';
@@ -31,132 +31,126 @@ var gameStart = false;
 // this will store opponent username for title
 var otherUser;
 
-const joinRoom = async () => {
+
+
+const Game = (props) => {
+    
+        const [answer, setAnswer] = useState(gameWord);
+        const [board, setBoard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill("")));
+        const [opponentboard, setOpponentboard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill("")))
+        const [correctLetters, setCorrectLetters] = useState([])   
+        const [notQuiteLetters, setNotLetters] = useState([])
+        const [letterPos, setLetterPos] = useState(0)
+        const [attemptNum, setattemptNum] = useState(0);
+        const [gameover, setgameover] = useState(false);
+        const [guessedWord , setGuesssedWord] = useState(false)
+        const [notify, setNotify] = useState(false)
+        const [status, setStatus] = useState("")
+        const [joinroom, setjoinRoom] = useState(0);
+    
+        // only call once
+        const joinRoom =  () => {
+            socket = io(ENDPOINT)
+            const userData = {
+                room: roomcode,
+                author: user.username,
+            }
+            setjoinRoom(1)  
+            socket.emit("join_room", userData);
+            socket.on("room_capacity", (data) => {
+                window.location.href = '/dashboard'
+                alert(data.message);
+            })
+            socket.on("createWord", (data) => {
+                gameWord = data.userWord;
+                console.log(gameWord)
+                gameStart = true;
+            })
+        }
+    
+    
+    const updateBoard = async () => {
         
-        socket = io(ENDPOINT)
-        const userData = {
-            room: roomcode,
-            author: user.username,
-        }  
-        await socket.emit("join_room", userData);
-        startGame();
-        socket.on("room_capacity", (data) => {
-            window.location.href = '/dashboard'
-            alert(data.message);
+        socket.on("gameWin", (data) => {
+            alert(data.message)
         })
-}
-
-
-const updateBoard = async () => {
-    
-    socket.on("gameWin", (data) => {
-        alert(data.message)
-    })
-    // data will be composed of wordarr which has an array of colors for example [green, black, yellow, green, black], message which is what has occurred
-    socket.on("gameOver", (data) => {
-        // try to send this array to update opponent board
-        var updatedArray = data.wordarr
-        alert(data.message +  ". The word was " + data.gameWord)
-    })
-    socket.on("wrongWord", (data) => {
-        var updatedArray = data.wordarr
-        // do something based off this array
-        // array will consist of "green", "yellow", or "black" array size is 5
-    })
-    
-}
-// waiting on socket room to tell when theres 2 users in the room
-// create 2 diff socket.on one to use depending on scenarios
-
-const startGame = async () => {
-    const userData = {
-        room: roomcode,
-        author: user.username,
+        // data will be composed of wordarr which has an array of colors for example [green, black, yellow, green, black], message which is what has occurred
+        socket.on("gameOver", (data) => {
+            // try to send this array to update opponent board
+            var updatedArray = data.wordarr
+            alert(data.message +  ". The word was " + data.gameWord)
+        })
+        socket.on("wrongWord", (data) => {
+            var updatedArray = data.wordarr
+            var bull = data.attemptNum;
+            console.log(updatedArray + bull);
+            // do something based off this array
+            // array will consist of "green", "yellow", or "black" array size is 5
+        })
+        
     }
-    socket.emit("gameStart", userData);
-    socket.on("game_start", (data) => {
-        if(data.status === "start"){
-           
-            socket.emit("toOtherUser", userData);
-            if(data.opponent !== user.username){
-                console.log(data.opponent)
-                otherUser = data.opponent;
-            }
-        }
-    })
-    socket.on("updateUser", (data) => {
-        if(data.status === "start"){
-            if(data.opponent !== user.username){
-                console.log(data.opponent)
-                otherUser = data.opponent;
-            }
-        }
-    })
-    socket.on("createWord", (data) => {
-        gameWord = data.userWord;
-        //this.setState({ answer: gameWord})
-        console.log(gameWord)
-        gameStart = true;
-    })
-}
-
-class Game extends React.Component {
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-            answer: gameWord,
-            board: Array(numRows).fill().map(() => Array(squaresPerRow).fill("")),
-            opponentboard: Array(numRows).fill().map(() => Array(squaresPerRow).fill("")),
-            correctLetters: [],
-            notQuiteLetters: [],
-            letterPos: 0,
-            attemptNum: 0,
-            gameover: false,
-            guessedWord: false,
-            notify: false,
-            status: "",
-        };
-
-        this.onInputLetter = this.onInputLetter.bind(this);
-        this.onEnter = this.onEnter.bind(this);
-        this.onDelete = this.onDelete.bind(this);
-        this.closeStatus = this.closeStatus.bind(this);
-    }
+    // waiting on socket room to tell when theres 2 users in the room
+    // create 2 diff socket.on one to use depending on scenarios
     
      
+        useEffect(() => { 
+                // checks to see if user has a roomcode, if not redirects to dashboard, if they do they continue into the room    
+            if(roomcode === ""){
+                window.location.href= "/dashboard";
+            } else {
+                console.log(joinroom)
+                if(joinroom === 0){
+                    joinRoom();
 
-    componentDidMount(){
-        // checks to see if user has a roomcode, if not redirects to dashboard, if they do they continue into the room    
-        if(roomcode === ""){
-            window.location.href= "/dashboard";
-        } else {
-            joinRoom();
-            if(otherUser){
-                // make changes to opponent board title <----------------- for kyle
+                }
+                const userData = {
+                    room: roomcode,
+                    author: user.username,
+                }
+                socket.emit("gameStart", userData);
+                socket.on("sendInfo", (data) => {
+                    socket.emit("toOtherUser", userData);
+                    if(data.opponent !== user.username){
+                        console.log(data.opponent)
+                        otherUser = data.opponent;
+                    }
+                })
+                socket.on("updateUser", (data) => {
+                    if(data.status === "start"){
+                        if(data.opponent !== user.username){
+                            console.log(data.opponent)
+                            otherUser = data.opponent;
+                        }
+                    }
+                })
+                updateBoard();
+                if(otherUser){
+                    // make changes to opponent board title <----------------- for kyle
+                }
             }
-        }
-        
-    }
-    onInputLetter(key){
+        }, [io])
+    
+    function onInputLetter(key){
         if(gameStart){
-            const {board, letterPos, attemptNum} = this.state;
-            if(this.state.gameover || letterPos > squaresPerRow - 1) {return;}
+
+            if(gameover || letterPos > squaresPerRow - 1) 
+            {
+                return;
+            }
             board[attemptNum][letterPos] = key;
-            this.setState({
-                board: board,
-                letterPos: letterPos + 1
-            });
+            setBoard(board)
+            var letPos = letterPos
+            setLetterPos(letPos + 1)
         }
     }
     
-    onEnter() {
-        const {board, letterPos, attemptNum, answer} = this.state;
-        this.setState({answer: gameWord});
+    function onEnter() {
+        setAnswer(gameWord);
         if(gameStart && attemptNum < numRows){
             if(letterPos !== squaresPerRow) {
                 // do something make status appear
-                this.setState({notify: true, status: "not enough letters"});
+                setNotify(true)
+                setStatus("Not Enough Letters")
                 return;
             }
 
@@ -166,23 +160,25 @@ class Game extends React.Component {
             }
             guess = guess.toLowerCase();
             if(guess === answer) {
-                this.setState({attemptNum: attemptNum + 1,
-                    letterPos: 0, gameover: true, guessedWord: true,
-                    notify: true, status: "You won!!"});
+                setattemptNum(attemptNum + 1)
+                setLetterPos(0);
+                setgameover(true);
+                setGuesssedWord(true);
+                setNotify(true);
+                setStatus("You Won!!")
             }
             else if(words.has(guess)) {
-                this.setState({
-                    attemptNum: attemptNum + 1,
-                    letterPos: 0
-                });
                 // sends word data to backend
                 socket.emit("checkWord", {guessWord: guess, userWord: gameWord, username: userName, attempt: attemptNum, room: roomcode})
                 updateBoard();
+                setattemptNum(attemptNum + 1)
+                setLetterPos(0);
 
                 
             }
             else{
-                this.setState({notify: true, status: 'Not a valid word'});
+                setNotify(true)
+                setStatus("Not a valid word");
             }
             return null;
         } else if(gameStart && attemptNum === numRows){
@@ -190,42 +186,51 @@ class Game extends React.Component {
         }
     }
 
-    onDelete() {
-            const {board, letterPos, attemptNum} = this.state;
-            if(letterPos === 0 && !gameStart) {return;}
-            board[attemptNum][letterPos - 1] = '';
-            this.setState({
-                board: board,
-                letterPos: letterPos - 1
-            });
+    function onDelete() {
+            if(letterPos !== 0 && gameStart) 
+            {
+                board[attemptNum][letterPos - 1] = '';
+                setBoard(board)
+                setLetterPos(letterPos - 1);
+            }
+            
+            
     }
 
-    closeStatus() {
-        this.setState({notify: false, status: ''});
+    function closeStatus() {
+        setNotify(false);
+        setStatus('');
     }
-
-    render() {
-        console.log(localStorage.getItem('roomcode'))
-        console.log(this.state.answer);
-        return (
-            <div>
-                <Header />
-                <div id='game-container'>
-                <GameContext.Provider
-                    value={{state: this.state,
-                    onInput: this.onInputLetter,
-                    onEnter: this.onEnter,
-                    onDelete: this.onDelete,}}
-                    >
-                      {this.state.notify ? <StatusWindow onClick={this.closeStatus}
-                        statusMsg={this.state.status}/> : null}
+    return (
+        <div>
+            <Header />
+            <div id='game-container'>
+            <GameContext.Provider
+                value={{
+                    state: {answer: answer,
+                            board: board,
+                            opponentboard: opponentboard,
+                            correctLetters: correctLetters,
+                            notQuiteLetters: notQuiteLetters,
+                            letterPos: letterPos,
+                            attemptNum: attemptNum,
+                            gameover: gameover,
+                            guessedWord: guessedWord,
+                            notify: notify,
+                            status: status,
+                        },
+                    onInput: onInputLetter,
+                    onEnter: onEnter,
+                    onDelete: onDelete,}}
+                >
+                  {notify ? <StatusWindow onClick={closeStatus}
+                    statusMsg={status}/> : null}
                       <Board id={'player1-board'}  playerNum={1}/>
                       <Board id={'player2-board'}  playerNum={2}/>
                     </GameContext.Provider>
                 </div>
             </div>
         );
-    }
 }
 
 

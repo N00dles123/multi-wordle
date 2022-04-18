@@ -176,18 +176,22 @@ io.on("connection", (socket) => {
         
         const roomUsers = io.sockets.adapter.rooms.get(data.room);
         var numClients = typeof roomUsers != "undefined" ? roomUsers.size : 0;
+
         // checks for room size
         // if greater than 1, kick client out
-        if(numClients <= 1){
+        if(numClients == 0){
+            socket.join(data.room);
+            console.log(`User with ID: ${data.author} joined room: ${data.room}`);
+        } else if(numClients == 1){
             // userWord will choose the random word for the game
-            var userWord = getRandomWord;
+            
             socket.join(data.room);
             //console.log(data.id);
             console.log(`User with ID: ${data.author} joined room: ${data.room}`);
             //socket.in(data).emit("Game start");
-            var curStatus = io.sockets.adapter.rooms.get(data.room).size;
-            io.to(data.room).emit("game_start", { status: "start", opponent: data.author, word: userWord})
-            console.log(curStatus);
+            //var curStatus = io.sockets.adapter.rooms.get(data.room).size;
+            socket.to(data.room).emit("sendInfo", { status: "start", opponent: data.author})
+            //console.log(curStatus);
         } else {
             io.to(socket.id).emit("room_capacity", { message: "Theres already 2 people in the room!" })
         }
@@ -204,8 +208,7 @@ io.on("connection", (socket) => {
     })
     socket.on("toOtherUser", (data) => {
         socket.to(data.room).emit("updateUser", { status: "start", opponent: data.author})
-        if(io.sockets.adapter.rooms.get(data.room).size == 2)
-            io.to(data.room).emit("createWord", { userWord: getRandomWord()})
+        io.to(data.room).emit("createWord", { userWord: getRandomWord()})
     })
     // data will include sender, user guess, and user word
     socket.on("checkWord", (data) => {
@@ -255,7 +258,7 @@ io.on("connection", (socket) => {
                     wordData[i] = "black"
                 }
             }
-            socket.to(data.room).emit("wrongWord", { wordarr: wordData})
+            socket.to(data.room).emit("wrongWord", { attemptNum: data.attempt, wordarr: wordData})
         }
     })
     
