@@ -7,6 +7,7 @@ import StatusWindow from '../Components/StatusWindow';
 import { GameContext } from '../Components/GameContext';
 import io from 'socket.io-client';
 import jwt_decode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 
 const ENDPOINT = "http://localhost:3001"
 var socket
@@ -34,7 +35,7 @@ var otherUser;
 
 
 const Game = (props) => {
-    
+        const history = useNavigate();
         const [answer, setAnswer] = useState(gameWord);
         const [board, setBoard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill("")));
         const [opponentboard, setOpponentboard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill("")))
@@ -47,7 +48,7 @@ const Game = (props) => {
         const [notify, setNotify] = useState(false)
         const [status, setStatus] = useState("")
         const [joinroom, setjoinRoom] = useState(0);
-    
+        const [otherUser, setOtheruser] = useState("");
         // only call once
         const joinRoom =  () => {
             socket = io(ENDPOINT)
@@ -73,12 +74,14 @@ const Game = (props) => {
         
         socket.on("gameWin", (data) => {
             alert(data.message)
+            history("/");
         })
         // data will be composed of wordarr which has an array of colors for example [green, black, yellow, green, black], message which is what has occurred
         socket.on("gameOver", (data) => {
             // try to send this array to update opponent board
             var updatedArray = data.wordarr
             alert(data.message +  ". The word was " + data.gameWord)
+            history("/");
         })
         socket.on("wrongWord", (data) => {
             var updatedArray = data.wordarr
@@ -112,21 +115,18 @@ const Game = (props) => {
                     socket.emit("toOtherUser", userData);
                     if(data.opponent !== user.username){
                         console.log(data.opponent)
-                        otherUser = data.opponent;
+                        setOtheruser(data.opponent);
                     }
                 })
                 socket.on("updateUser", (data) => {
                     if(data.status === "start"){
                         if(data.opponent !== user.username){
                             console.log(data.opponent)
-                            otherUser = data.opponent;
+                            setOtheruser(data.opponent);
                         }
                     }
                 })
                 updateBoard();
-                if(otherUser){
-                    // make changes to opponent board title <----------------- for kyle
-                }
             }
         }, [io])
     
@@ -225,8 +225,8 @@ const Game = (props) => {
                 >
                   {notify ? <StatusWindow onClick={closeStatus}
                     statusMsg={status}/> : null}
-                      <Board id={'player1-board'}  playerNum={1}/>
-                      <Board id={'player2-board'}  playerNum={2}/>
+                      <Board id={'player1-board'} name={userName} playerNum={1}/>
+                      <Board id={'player2-board'} name={(otherUser !== "") ? otherUser : "Loading..."} playerNum={2}/>
                     </GameContext.Provider>
                 </div>
             </div>

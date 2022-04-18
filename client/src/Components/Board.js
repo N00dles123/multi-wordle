@@ -79,7 +79,7 @@ class Board extends React.Component {
         }
         return (
             <div className="board-container">
-                <div className="board-title"> Opponent Board </div>
+                <div className="board-title"> {this.props.name} </div>
                 <div className='board' id={this.props.id}> {rows} </div>
                 {this.props.playerNum === 1 ? <Keyboard /> : null}
             </div>
