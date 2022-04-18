@@ -94,6 +94,7 @@ const startGame = async () => {
     })
     socket.on("createWord", (data) => {
         gameWord = data.userWord;
+        //this.setState({ answer: gameWord})
         console.log(gameWord)
         gameStart = true;
     })
@@ -151,6 +152,7 @@ class Game extends React.Component {
     
     onEnter() {
         const {board, letterPos, attemptNum, answer} = this.state;
+        this.setState({answer: gameWord});
         if(gameStart && attemptNum < numRows){
             if(letterPos !== squaresPerRow) {
                 // do something make status appear
@@ -168,7 +170,7 @@ class Game extends React.Component {
                     letterPos: 0, gameover: true, guessedWord: true,
                     notify: true, status: "You won!!"});
             }
-            else if(gameWord.has(guess)) {
+            else if(words.has(guess)) {
                 this.setState({
                     attemptNum: attemptNum + 1,
                     letterPos: 0

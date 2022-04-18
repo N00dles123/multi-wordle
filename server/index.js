@@ -204,10 +204,12 @@ io.on("connection", (socket) => {
     })
     socket.on("toOtherUser", (data) => {
         socket.to(data.room).emit("updateUser", { status: "start", opponent: data.author})
-        io.to(data.room).emit("createWord", { userWord: getRandomWord()})
+        if(io.sockets.adapter.rooms.get(data.room).size == 2)
+            io.to(data.room).emit("createWord", { userWord: getRandomWord()})
     })
     // data will include sender, user guess, and user word
     socket.on("checkWord", (data) => {
+        console.log(data.username + " guessed: " + data.guessWord)
         var wordData = ["", "", "", "", ""];
         if(data.guessWord == data.userWord && data.attempt < 6){
             io.to(socket.id).emit("gameWin", { wordarr: ["green", "green", "green", "green", "green"] ,message: "You have won the game!"})
