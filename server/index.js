@@ -215,8 +215,10 @@ io.on("connection", (socket) => {
         console.log(data.username + " guessed: " + data.guessWord)
         var wordData = ["", "", "", "", ""];
         if(data.guessWord == data.userWord && data.attempt < 6){
+            console.log("End condition sent!")
             io.to(socket.id).emit("gameWin", { wordarr: ["green", "green", "green", "green", "green"] ,message: "You have won the game!"})
             socket.to(data.room).emit("gameOver", { wordarr: ["green", "green", "green", "green", "green"], message: "You have lost the game", gameWord: data.userWord })
+            //io.leave(data.room);
         } else if(data.attempt < 6){
             let guessWord = data.guessWord
             // processes guess

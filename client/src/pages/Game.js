@@ -23,7 +23,7 @@ if(token){
     user = jwt_decode(token);
     userName = user.username 
 }
-
+var bull = 0;
 
 
 // game starts when both players are in the same room change up the board effect
@@ -34,7 +34,7 @@ var gameStart = false;
 
 
 const Game = (props) => {
-        const history = useNavigate();
+        //const history = useNavigate();
         const [answer, setAnswer] = useState(gameWord);
         const [board, setBoard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill("")));
         const [opponentboard, setOpponentboard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill("")))
@@ -68,20 +68,33 @@ const Game = (props) => {
             })
         }
     
-    
-    const updateBoard = async () => {
-        
+    const endGame =  () => {
         socket.on("gameWin", (data) => {
-            alert(data.message)
-            history("/dashboard");
+            if(!gameover){
+                setgameover(true)
+                //console.log("Win emitted!")
+                //bull = 1;
+                alert(data.message)
+                window.location.href = "/dashboard"
+            }
         })
         // data will be composed of wordarr which has an array of colors for example [green, black, yellow, green, black], message which is what has occurred
         socket.on("gameOver", (data) => {
             // try to send this array to update opponent board
-            var updatedArray = data.wordarr
-            alert(data.message +  ". The word was " + data.gameWord)
-            history("/dashboard");
+            if(!gameover){
+                //bull = 1;
+                //console.log("data emitted!")
+                setgameover(true);
+                var updatedArray = data.wordarr
+                alert(data.message +  ". The word was " + data.gameWord)
+                window.location.href = "/dashboard"
+            }
         })
+    }
+    const updateBoard = async () => {
+       
+            
+        
         socket.on("wrongWord", (data) => {
             var updatedArray = data.wordarr
             var bull = data.attemptNum;
@@ -125,9 +138,14 @@ const Game = (props) => {
                         }
                     }
                 })
+                //console.log("function called!")
                 updateBoard();
+                if(!gameover){
+                    //find a way to call this only once
+                    endGame();
+                }
             }
-        }, [io])
+        }, [socket])
     
     function onInputLetter(key){
         if(gameStart){
@@ -165,7 +183,7 @@ const Game = (props) => {
                 setGuesssedWord(true);
                 setNotify(true);
                 setStatus("You Won!!")
-            }
+            } 
             else if(words.has(guess)) {
                 // sends word data to backend
                 socket.emit("checkWord", {guessWord: guess, userWord: gameWord, username: userName, attempt: attemptNum, room: roomcode})

@@ -61,6 +61,7 @@ class Board extends React.Component {
     static contextType = GameContext;
     renderRow(rowNum) {
         const {board, opponentboard} = this.context.state;
+        //console.log(this.context.state);
         return(
             <div className='game-row' id={'gamerow' + rowNum}>
                 <Row 
