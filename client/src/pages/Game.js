@@ -29,8 +29,7 @@ if(token){
 // game starts when both players are in the same room change up the board effect
 var gameStart = false;
 
-// this will store opponent username for title
-var otherUser;
+
 
 
 
@@ -74,14 +73,14 @@ const Game = (props) => {
         
         socket.on("gameWin", (data) => {
             alert(data.message)
-            history("/");
+            history("/dashboard");
         })
         // data will be composed of wordarr which has an array of colors for example [green, black, yellow, green, black], message which is what has occurred
         socket.on("gameOver", (data) => {
             // try to send this array to update opponent board
             var updatedArray = data.wordarr
             alert(data.message +  ". The word was " + data.gameWord)
-            history("/");
+            history("/dashboard");
         })
         socket.on("wrongWord", (data) => {
             var updatedArray = data.wordarr
