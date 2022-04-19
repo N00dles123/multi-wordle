@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "./GameContext";
 import Keyboard from './KeyBoard';
 
@@ -59,38 +59,43 @@ function Row(props) {
     return squares;
 }
 
-class Board extends React.Component { 
-    static contextType = GameContext;
-    renderRow(rowNum) {
-        const {board, opponentboard} = this.context.state;
+const Board = (props) => { 
+    const contextType = useContext(GameContext);
+    const {board, opponentboard} = contextType.state;
+    const [rows, setRows]= useState([]);
+    //const [opponentBoard, setOpponentboard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill(""))) 
+    function renderRow(rowNum) {
+        
+        //setOpponentboard(opponentboard);
         //console.log(this.context.state);
         return(
             <div className='game-row' id={'gamerow' + rowNum}>
                 <Row 
                     rowNum={rowNum}
-                    playerNum={this.props.playerNum}
-                    board={this.props.playerNum === 1 ? board : opponentboard}
+                    playerNum={props.playerNum}
+                    board={props.playerNum === 1 ? board : opponentboard}
                 />
             </div>
         );
     }
-    componentDidMount(){
+    for(let i = 0; i < numRows; i++){
+        rows.push(renderRow(i + 1));
+    }
+    useEffect (() => {
         
-    }
-    render() {
-        const rows = [];
         for(let i = 0; i < numRows; i++){
-            rows.push(this.renderRow(i + 1));
+            rows.push(renderRow(i + 1));
         }
-        return (
-            <div className="board-container">
-                <div className="board-title"> {this.props.name} </div>
-                <div className='board' id={this.props.id}> {rows} </div>
-                {this.props.playerNum === 1 ? <Keyboard /> : null}
-            </div>
+    }, [opponentboard])
+    return (
+        <div className="board-container">
+            <div className="board-title"> {props.name} </div>
+            <div className='board' id={props.id}> {rows} </div>
+            {props.playerNum === 1 ? <Keyboard /> : null}
+        </div>
 
-        );
-    }
+    );
+    
 }
 
 export default Board;

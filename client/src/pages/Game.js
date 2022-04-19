@@ -48,6 +48,7 @@ const Game = (props) => {
         const [status, setStatus] = useState("")
         const [joinroom, setjoinRoom] = useState(0);
         const [otherUser, setOtheruser] = useState("");
+        const [otherUserGuess, setOtherUserGuess] = useState("");
         // only call once
         const joinRoom =  () => {
             socket = io(ENDPOINT)
@@ -91,20 +92,13 @@ const Game = (props) => {
             }
         })
     }
-    const updateBoard = async () => {
+    /*const updateBoard = async () => {
        
             
         
-        socket.on("wrongWord", (data) => {
-            var updatedArray = data.wordarr
-            var bull = data.attemptNum;
-            for(var i = 0; i < 5; i++)    
-                opponentboard[bull][i] = updatedArray[i];
-            // do something based off this array
-            // array will consist of "green", "yellow", or "black" array size is 5
-        })
         
-    }
+        
+    }*/
     // waiting on socket room to tell when theres 2 users in the room
     // create 2 diff socket.on one to use depending on scenarios
     
@@ -140,13 +134,24 @@ const Game = (props) => {
                     }
                 })
                 //console.log("function called!")
-                updateBoard();
+                socket.on("wrongWord", (data) => {
+                    var updatedArray = data.wordarr
+                    var waste = ""
+                    var bull = data.attemptNum;
+                    for(var i = 0; i < 5; i++){    
+                        waste += updatedArray[i]
+                        opponentboard[bull][i] = updatedArray[i];
+                    }
+                    setOtherUserGuess(waste);
+                    // do something based off this array
+                    // array will consist of "green", "yellow", or "black" array size is 5
+                })
                 if(!gameover){
                     //find a way to call this only once
                     endGame();
                 }
             }
-        }, [socket])
+        }, [otherUser, gameover ,otherUserGuess])
     
     function onInputLetter(key){
         if(gameStart){
@@ -178,17 +183,16 @@ const Game = (props) => {
             }
             guess = guess.toLowerCase();
             if(guess === answer) {
-                setattemptNum(attemptNum + 1)
+                //setattemptNum(attemptNum + 1)
                 setLetterPos(0);
                 setgameover(true);
                 setGuesssedWord(true);
                 setNotify(true);
                 setStatus("You Won!!")
             } 
-            else if(words.has(guess)) {
+            if(words.has(guess)) {
                 // sends word data to backend
                 socket.emit("checkWord", {guessWord: guess, userWord: gameWord, username: userName, attempt: attemptNum, room: roomcode})
-                updateBoard();
                 setattemptNum(attemptNum + 1)
                 setLetterPos(0);
 
