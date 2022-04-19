@@ -75,7 +75,6 @@ app.get('/api/user', async (req, res) => {
 
 app.post('/api/login', async (req, res) => {
     const {username, password} = req.body;
-    //console.log(username);
 
     const user = await User.findOne({uid: username}).lean();
     
@@ -102,7 +101,7 @@ app.post('/api/login', async (req, res) => {
 
 // for registration to database
 app.post('/api/register', async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
 
     const {email, uid, pwd, numWins, ifOnline} = req.body;
 
@@ -213,15 +212,16 @@ io.on("connection", (socket) => {
     // data will include sender, user guess, and user word
     socket.on("checkWord", (data) => {
         console.log(data.username + " guessed: " + data.guessWord)
+        console.log(data.attempt);
         var wordData = ["", "", "", "", ""];
         var updateLetters = data.correctLetters
         var updateNotQuiteLetters = data.notQuiteLetters
-        if(data.guessWord == data.userWord && data.attempt < 6){
-            console.log("End condition sent!")
+        if(data.guessWord == data.userWord){
+            //console.log("End condition sent!")
             io.to(socket.id).emit("gameWin", { wordarr: ["correct", "correct", "correct", "correct", "correct"] ,message: "You have won the game!"})
             socket.to(data.room).emit("gameOver", { wordarr: ["correct", "correct", "correct", "correct", "correct"], message: "You have lost the game", gameWord: data.userWord })
             //io.leave(data.room);
-        } else if(data.attempt < 6){
+        } else if(data.attempt < 5){
             let guessWord = data.guessWord
             // processes guess
             let hashmap = new Map();
@@ -264,9 +264,13 @@ io.on("connection", (socket) => {
                     wordData[i] = "error"
                 }
             }
-            //wordData = [guessWord.charAt(0), guessWord.charAt(1), guessWord.charAt(2), guessWord.charAt(3), guessWord.charAt(4)]
+            
             io.to(socket.id).emit("onPlayer1WrongWord", {attemptNum: data.attempt, wordarr: wordData, correctLetters: updateLetters, notQuiteLetters: updateNotQuiteLetters})
             socket.to(data.room).emit("onOpponentWrongWord", { attemptNum: data.attempt, wordarr: wordData})
+        } else if(data.attempt == 5 && data.userWord != data.guessWord){
+            console.log(data.username)
+            io.to(socket.id).emit("gameOver", { wordarr: ["correct", "correct", "correct", "correct", "correct"], message: "You have lost the game", gameWord: data.userWord })
+            socket.to(data.room).emit("gameWin", { wordarr: ["correct", "correct", "correct", "correct", "correct"] ,message: `You have won the game! The word was ${data.userWord}`})
         }
     })
     

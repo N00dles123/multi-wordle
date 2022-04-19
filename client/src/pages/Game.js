@@ -148,10 +148,10 @@ const Game = (props) => {
                 updatedOpponentColors[attemptNum] = updatedArray;
                 setOpponentboard(updatedOpponentColors);
             })
-            if (!gameover) {
+            //if (!gameover) {
                 //find a way to call this only once
                 endGame();
-            }
+            //}
         }
     }, [otherUser, gameover, opponentboard])
 
