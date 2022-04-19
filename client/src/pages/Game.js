@@ -70,25 +70,31 @@ const Game = (props) => {
         }
     
     const endGame =  () => {
-        socket.on("gameWin", (data) => {
-            if(!gameover){
+        socket.once("gameWin", (data) => {
+            bull++;
+            console.log(bull);
+            if(!gameover && bull === 1){
                 setgameover(true)
                 //console.log("Win emitted!")
                 //bull = 1;
                 alert(data.message)
                 window.location.href = "/dashboard"
+                return;
             }
         })
         // data will be composed of wordarr which has an array of colors for example [green, black, yellow, green, black], message which is what has occurred
         socket.on("gameOver", (data) => {
+            bull++;
+            console.log(bull);
             // try to send this array to update opponent board
-            if(!gameover){
+            if(!gameover && bull === 1){
                 //bull = 1;
                 //console.log("data emitted!")
                 setgameover(true);
                 var updatedArray = data.wordarr
                 alert(data.message +  ". The word was " + data.gameWord)
                 window.location.href = "/dashboard"
+                return;
             }
         })
     }
