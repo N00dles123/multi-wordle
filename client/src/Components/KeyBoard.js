@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { GameContext } from "./GameContext";
+import { useEffect, useState } from "react";
 
 function Button(props) {
-    const {onEnter, onDelete, onInput} = useContext(GameContext);
+    const {onEnter, onDelete, onInput} = useContext(GameContext)
+    const {correctLetters, notQuiteLetters} = useContext(GameContext).state
     const inputLetter = () => {
         if(props.value === "Enter") {
             onEnter();
@@ -15,11 +17,15 @@ function Button(props) {
         }
     };
 
+    let status = "";
+    if(correctLetters.includes(props.value.toLowerCase())) { status = 'correct'}
+    else if(notQuiteLetters.includes(props.value.toLowerCase())) {status = 'notQuite'}
+
     return (
         <button 
             value={props.value}
             id={props.value}
-            className={'key '}
+            className={'key ' + status}
             onClick={inputLetter}>
                 {props.value}
         </button>
@@ -72,4 +78,4 @@ class Keyboard extends React.Component {
     }
 }
 
-export default Keyboard;
+export default Keyboard

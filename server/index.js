@@ -214,10 +214,12 @@ io.on("connection", (socket) => {
     socket.on("checkWord", (data) => {
         console.log(data.username + " guessed: " + data.guessWord)
         var wordData = ["", "", "", "", ""];
+        var updateLetters = data.correctLetters
+        var updateNotQuiteLetters = data.notQuiteLetters
         if(data.guessWord == data.userWord && data.attempt < 6){
             console.log("End condition sent!")
-            io.to(socket.id).emit("gameWin", { wordarr: ["green", "green", "green", "green", "green"] ,message: "You have won the game!"})
-            socket.to(data.room).emit("gameOver", { wordarr: ["green", "green", "green", "green", "green"], message: "You have lost the game", gameWord: data.userWord })
+            io.to(socket.id).emit("gameWin", { wordarr: ["correct", "correct", "correct", "correct", "correct"] ,message: "You have won the game!"})
+            socket.to(data.room).emit("gameOver", { wordarr: ["correct", "correct", "correct", "correct", "correct"], message: "You have lost the game", gameWord: data.userWord })
             //io.leave(data.room);
         } else if(data.attempt < 6){
             let guessWord = data.guessWord
@@ -237,7 +239,8 @@ io.on("connection", (socket) => {
                 // process for greens first
                 let guess = guessWord.charAt(i)
                 if(guess == data.userWord.charAt(i)){
-                    wordData[i] = "green";
+                    wordData[i] = "correct";
+                    if(!updateLetters.includes(guess)) { updateLetters.push(guess) }
                     if(hashmap.get(guess) == 1){
                         hashmap.delete(guess);
                     } else {
@@ -248,20 +251,22 @@ io.on("connection", (socket) => {
             // looping to process yellows and nonexistents 
             for(let i = 0; i < 5; i++){
                 let guess = guessWord.charAt(i)
-                if(hashmap.has(guess) && wordData[i] != "green"){
-                    wordData[i] = "yellow";
+                if(hashmap.has(guess) && wordData[i] != "correct"){
+                    wordData[i] = "notQuite";
                     // removes guess from hashmap
                     if(hashmap.get(guess) > 1){
                         hashmap.set(guess, (hashmap.get(guess) - 1))
                     } else {
                         hashmap.delete(guess);
                     }
-                } else if(!hashmap.has(guess) && wordData[i] != "green"){
-                    wordData[i] = "black"
+                    if(!updateNotQuiteLetters.includes(guess)) { updateNotQuiteLetters.push(guess) }
+                } else if(!hashmap.has(guess) && wordData[i] != "correct"){
+                    wordData[i] = "error"
                 }
             }
-            wordData = [guessWord.charAt(0), guessWord.charAt(1), guessWord.charAt(2), guessWord.charAt(3), guessWord.charAt(4)]
-            socket.to(data.room).emit("wrongWord", { attemptNum: data.attempt, wordarr: wordData})
+            //wordData = [guessWord.charAt(0), guessWord.charAt(1), guessWord.charAt(2), guessWord.charAt(3), guessWord.charAt(4)]
+            io.to(socket.id).emit("onPlayer1WrongWord", {attemptNum: data.attempt, wordarr: wordData, correctLetters: updateLetters, notQuiteLetters: updateNotQuiteLetters})
+            socket.to(data.room).emit("onOpponentWrongWord", { attemptNum: data.attempt, wordarr: wordData})
         }
     })
     
@@ -273,5 +278,4 @@ io.on("connection", (socket) => {
 
 
 console.log(__dirname);
-
 

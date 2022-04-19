@@ -6,6 +6,9 @@ const numRows = 6;
 const squaresPerRow = 5;
 
 function Square(props) {
+    useEffect(() => {
+        
+    }, [props])
     return (
         <div 
             className={(props.playerNum === 1 ?'guess-box ' : 'guest-box ') + props.letterState} 
@@ -17,43 +20,19 @@ function Square(props) {
 
 function Row(props) { 
     const states=['correct', 'notQuite', 'error'];
-    const squareState =Array(squaresPerRow).fill('');
-    const {answer, attemptNum} = useContext(GameContext).state;
+    const {answer, opponentboard, boardColors} = useContext(GameContext).state;
     let correctWord = answer;
-    // Set color state of each square
-    if(props.rowNum - 1 < attemptNum) {
-        var userWord = "";
-        // Handle cases for correct characters
-        for(let i = 0; i < squaresPerRow; i++){
-            const letter = props.board[props.rowNum - 1][i]
-            if (letter === answer[i]) {
-                squareState[i] = states[0];
-                userWord += letter;
-                correctWord = correctWord.replace(props.board[props.rowNum-1][i], ' ');
-            }
-        }
-        // Handle for letters that are in the wrong positon
-        for(let i = 0; i < squaresPerRow; i++){
-            const letter = props.board[props.rowNum - 1][i]
-            if(squareState[i] !== states[0] && letter !== '' && correctWord.includes(letter)){
-                squareState[i] = states[1];
-                correctWord = correctWord.replace(props.board[props.rowNum-1][i], '');
-                
-            }
-            else if(squareState[i] !== states[0] && squareState[i] !== states[1] && userWord !== "     ") {
-                squareState[i] = states[2];
-            }
-        }
-    }
+    useEffect(() => {
 
+    }, props)
     const squares =[];
     for (let i = 0; i < squaresPerRow; i++){
         squares.push(
         <Square 
             id={'row' + props.rowNum + 'box' + (i + 1)}
             playerNum={props.playerNum}
-            letter={props.board[props.rowNum - 1][i]}
-            letterState={squareState[i]}/>
+            letter={(props.playerNum === 1) ? props.board[props.rowNum - 1][i] : ""}
+            letterState={(props.playerNum === 1) ? boardColors[props.rowNum-1][i] : opponentboard[props.rowNum -1 ][i]}/>
         );
     }
     return squares;
@@ -65,9 +44,6 @@ const Board = (props) => {
     const [rows, setRows]= useState([]);
     //const [opponentBoard, setOpponentboard] = useState(Array(numRows).fill().map(() => Array(squaresPerRow).fill(""))) 
     function renderRow(rowNum) {
-        
-        //setOpponentboard(opponentboard);
-        //console.log(this.context.state);
         return(
             <div className='game-row' id={'gamerow' + rowNum}>
                 <Row 
@@ -81,12 +57,14 @@ const Board = (props) => {
     for(let i = 0; i < numRows; i++){
         rows.push(renderRow(i + 1));
     }
+    
     useEffect (() => {
         
         for(let i = 0; i < numRows; i++){
             rows.push(renderRow(i + 1));
         }
     }, [opponentboard])
+    
     return (
         <div className="board-container">
             <div className="board-title"> {props.name} </div>
@@ -95,7 +73,6 @@ const Board = (props) => {
         </div>
 
     );
-    
 }
 
-export default Board;
+export default Board
