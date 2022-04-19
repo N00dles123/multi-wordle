@@ -22,24 +22,26 @@ function Row(props) {
     let correctWord = answer;
     // Set color state of each square
     if(props.rowNum - 1 < attemptNum) {
+        var userWord = "";
         // Handle cases for correct characters
         for(let i = 0; i < squaresPerRow; i++){
             const letter = props.board[props.rowNum - 1][i]
             if (letter === answer[i]) {
                 squareState[i] = states[0];
+                userWord += letter;
                 correctWord = correctWord.replace(props.board[props.rowNum-1][i], ' ');
             }
         }
         // Handle for letters that are in the wrong positon
         for(let i = 0; i < squaresPerRow; i++){
             const letter = props.board[props.rowNum - 1][i]
-            if(squareState[i] !== states[0] && letter !== '' &&
-                correctWord.includes(letter)){
+            if(squareState[i] !== states[0] && letter !== '' && correctWord.includes(letter)){
                 squareState[i] = states[1];
                 correctWord = correctWord.replace(props.board[props.rowNum-1][i], '');
-                if(squareState[i] !== states[0] && squareState[i] !== states[1]) {
-                    squareState[i] = states[2];
-                }
+                
+            }
+            else if(squareState[i] !== states[0] && squareState[i] !== states[1] && userWord !== "     ") {
+                squareState[i] = states[2];
             }
         }
     }
@@ -72,7 +74,9 @@ class Board extends React.Component {
             </div>
         );
     }
-
+    componentDidMount(){
+        
+    }
     render() {
         const rows = [];
         for(let i = 0; i < numRows; i++){

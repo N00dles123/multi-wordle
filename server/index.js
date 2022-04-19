@@ -260,6 +260,7 @@ io.on("connection", (socket) => {
                     wordData[i] = "black"
                 }
             }
+            wordData = [guessWord.charAt(0), guessWord.charAt(1), guessWord.charAt(2), guessWord.charAt(3), guessWord.charAt(4)]
             socket.to(data.room).emit("wrongWord", { attemptNum: data.attempt, wordarr: wordData})
         }
     })

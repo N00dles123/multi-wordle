@@ -98,7 +98,8 @@ const Game = (props) => {
         socket.on("wrongWord", (data) => {
             var updatedArray = data.wordarr
             var bull = data.attemptNum;
-            console.log(updatedArray + bull);
+            for(var i = 0; i < 5; i++)    
+                opponentboard[bull][i] = updatedArray[i];
             // do something based off this array
             // array will consist of "green", "yellow", or "black" array size is 5
         })
