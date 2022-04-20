@@ -46,7 +46,7 @@ const Dashboard = () => {
     
     }
     async function populateBoard() {
-        await fetch('http://localhost:3001/api/user', {
+        await fetch('https://multi-wordle.herokuapp.com/api/user', {
             method: 'GET',
             headers: {
                 'x-access-token': localStorage.getItem('token'),
