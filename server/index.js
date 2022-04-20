@@ -13,16 +13,29 @@ const cors = require("cors");
 const { application } = require('express')
 const { resolveAny } = require("dns");
 const words = require('./models/Words');
-
-
-// https://www.youtube.com/watch?v=Ejg7es3ba2k&ab_channel=codedamn
-// make sure to install jsonwebtoken and react 
-// so that token is not pushed to github
 require('dotenv').config();
 
-const word = getRandomWord()
-const port = '3001';
 const app = express();
+// deployment
+const __dirname1 = path.resolve()
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname1, '/client/build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+    })
+} else {
+    app.get("/", (req, res) => {
+        res.send("API is running succcessfully")
+    })
+}
+// deployment
+
+
+
+//const word = getRandomWord()
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 const uri = process.env.ATLAS_URI;
 
@@ -158,8 +171,8 @@ app.post('/api/logout', async(req, res) => {
     }
 })
 
-const server = app.listen(port, () => {
-    console.log('Server up at 3001');
+const server = app.listen(PORT, () => {
+    console.log('Server up');
 });
 
 const io = require("socket.io")(server, {

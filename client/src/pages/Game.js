@@ -9,8 +9,8 @@ import io from 'socket.io-client';
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 
-const ENDPOINT = "http://localhost:3001"
-var socket
+const ENDPOINT = "https://multi-wordle.herokuapp.com/";
+var socket;
 const numRows = 6;
 const squaresPerRow = 5;
 var gameWord;
