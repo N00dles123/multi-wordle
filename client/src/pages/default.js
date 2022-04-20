@@ -35,7 +35,7 @@ function App() {
       alert("Login Successful");
         window.location.href = '/dashboard';
     } else {
-      alert("Check yo mothafuckin username and password");
+      alert("Check your username and password");
     }
   
   }
