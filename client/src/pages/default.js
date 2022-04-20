@@ -18,7 +18,7 @@ function App() {
       alert("There are empty fields")
       return;
     }
-    const response = await fetch('http://localhost:3001/api/login', {
+    const response = await fetch('https://multi-wordle.herokuapp.com/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ function App() {
       alert('Passwords Do not Match')
       return;
     }
-    const response = await fetch('http://localhost:3001/api/register', {
+    const response = await fetch('https://multi-wordle.herokuapp.com/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

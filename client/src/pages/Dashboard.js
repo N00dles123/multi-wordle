@@ -31,7 +31,7 @@ const Dashboard = () => {
         event.preventDefault()
         
         localStorage.removeItem('token');
-        const response = await fetch('http://localhost:3001/api/logout', {
+        const response = await fetch('https://multi-wordle.herokuapp.com/api/logout', {
             method: 'POST',
             headers: {
                 'x-access-token': localStorage.getItem('token'),
