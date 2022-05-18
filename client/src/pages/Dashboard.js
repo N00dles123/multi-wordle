@@ -53,7 +53,7 @@ const Dashboard = () => {
             },
         }).then((req) => req.json())
         .then((user) => {
-            //console.log(user.numWins);
+            console.log(user.user);
             //const userData = 
             if(user.user !== null){
                 //console.log(user.user);

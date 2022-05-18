@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from "./GameContext";
 import Keyboard from './KeyBoard';
-
+// this code contains the board, row, and box elements
 const numRows = 6;
 const squaresPerRow = 5;
 
