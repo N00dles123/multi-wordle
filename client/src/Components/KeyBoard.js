@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { GameContext } from "./GameContext";
 import { useEffect, useState } from "react";
 
+// this is to add functionality to the keyboard, not exactly fully functional yet
+
 function Button(props) {
     const {onEnter, onDelete, onInput} = useContext(GameContext)
     const {correctLetters, notQuiteLetters} = useContext(GameContext).state
